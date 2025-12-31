@@ -5,77 +5,77 @@ import * as THREE from 'three';
 import { BloomEffect, EffectComposer, EffectPass, RenderPass, SMAAEffect, SMAAPreset } from 'postprocessing';
 
 const defaultOptions = {
-  onSpeedUp: () => {},
-  onSlowDown: () => {},
-  distortion: 'turbulentDistortion',
-  length: 400,
-  roadWidth: 10,
-  islandWidth: 2,
-  lanesPerRoad: 4,
-  fov: 90,
-  fovSpeedUp: 150,
-  speedUp: 2,
-  carLightsFade: 0.4,
-  totalSideLightSticks: 20,
-  lightPairsPerRoadWay: 40,
-  shoulderLinesWidthPercentage: 0.05,
-  brokenLinesWidthPercentage: 0.1,
-  brokenLinesLengthPercentage: 0.5,
-  lightStickWidth: [0.12, 0.5],
-  lightStickHeight: [1.3, 1.7],
-  movingAwaySpeed: [60, 80],
-  movingCloserSpeed: [-120, -160],
-  carLightsLength: [400 * 0.03, 400 * 0.2],
-  carLightsRadius: [0.05, 0.14],
-  carWidthPercentage: [0.3, 0.5],
-  carShiftX: [-0.8, 0.8],
-  carFloorSeparation: [0, 5],
-  colors: {
-    roadColor: 0x080808,
-    islandColor: 0x0a0a0a,
-    background: 0x000000,
-    shoulderLines: 0xffffff,
-    brokenLines: 0xffffff,
-    leftCars: [0xd856bf, 0x6750a2, 0xc247ac],
-    rightCars: [0x03b3c3, 0x0e5ea5, 0x324555],
-    sticks: 0x03b3c3
-  }
+    onSpeedUp: () => { },
+    onSlowDown: () => { },
+    distortion: 'turbulentDistortion',
+    length: 400,
+    roadWidth: 10,
+    islandWidth: 2,
+    lanesPerRoad: 4,
+    fov: 90,
+    fovSpeedUp: 150,
+    speedUp: 2,
+    carLightsFade: 0.4,
+    totalSideLightSticks: 20,
+    lightPairsPerRoadWay: 40,
+    shoulderLinesWidthPercentage: 0.05,
+    brokenLinesWidthPercentage: 0.1,
+    brokenLinesLengthPercentage: 0.5,
+    lightStickWidth: [0.12, 0.5],
+    lightStickHeight: [1.3, 1.7],
+    movingAwaySpeed: [60, 80],
+    movingCloserSpeed: [-120, -160],
+    carLightsLength: [400 * 0.03, 400 * 0.2],
+    carLightsRadius: [0.05, 0.14],
+    carWidthPercentage: [0.3, 0.5],
+    carShiftX: [-0.8, 0.8],
+    carFloorSeparation: [0, 5],
+    colors: {
+        roadColor: 0x080808,
+        islandColor: 0x0a0a0a,
+        background: 0x000000,
+        shoulderLines: 0xffffff,
+        brokenLines: 0xffffff,
+        leftCars: [0xd856bf, 0x6750a2, 0xc247ac],
+        rightCars: [0x03b3c3, 0x0e5ea5, 0x324555],
+        sticks: 0x03b3c3
+    }
 };
 
 function nsin(val) {
-  return Math.sin(val) * 0.5 + 0.5;
+    return Math.sin(val) * 0.5 + 0.5;
 }
 
 const mountainUniforms = {
-  uFreq: { value: new THREE.Vector3(3, 6, 10) },
-  uAmp: { value: new THREE.Vector3(30, 30, 20) }
+    uFreq: { value: new THREE.Vector3(3, 6, 10) },
+    uAmp: { value: new THREE.Vector3(30, 30, 20) }
 };
 
 const xyUniforms = {
-  uFreq: { value: new THREE.Vector2(5, 2) },
-  uAmp: { value: new THREE.Vector2(25, 15) }
+    uFreq: { value: new THREE.Vector2(5, 2) },
+    uAmp: { value: new THREE.Vector2(25, 15) }
 };
 
 const LongRaceUniforms = {
-  uFreq: { value: new THREE.Vector2(2, 3) },
-  uAmp: { value: new THREE.Vector2(35, 10) }
+    uFreq: { value: new THREE.Vector2(2, 3) },
+    uAmp: { value: new THREE.Vector2(35, 10) }
 };
 
 const turbulentUniforms = {
-  uFreq: { value: new THREE.Vector4(4, 8, 8, 1) },
-  uAmp: { value: new THREE.Vector4(25, 5, 10, 10) }
+    uFreq: { value: new THREE.Vector4(4, 8, 8, 1) },
+    uAmp: { value: new THREE.Vector4(25, 5, 10, 10) }
 };
 
 const deepUniforms = {
-  uFreq: { value: new THREE.Vector2(4, 8) },
-  uAmp: { value: new THREE.Vector2(10, 20) },
-  uPowY: { value: new THREE.Vector2(20, 2) }
+    uFreq: { value: new THREE.Vector2(4, 8) },
+    uAmp: { value: new THREE.Vector2(10, 20) },
+    uPowY: { value: new THREE.Vector2(20, 2) }
 };
 
 const distortions = {
-  mountainDistortion: {
-    uniforms: mountainUniforms,
-    getDistortion: `
+    mountainDistortion: {
+        uniforms: mountainUniforms,
+        getDistortion: `
       uniform vec3 uAmp;
       uniform vec3 uFreq;
       #define PI 3.14159265358979
@@ -91,27 +91,27 @@ const distortions = {
         );
       }
     `,
-    getJS: (progress, time) => {
-      const movementProgressFix = 0.02;
-      const uFreq = mountainUniforms.uFreq.value;
-      const uAmp = mountainUniforms.uAmp.value;
+        getJS: (progress, time) => {
+            const movementProgressFix = 0.02;
+            const uFreq = mountainUniforms.uFreq.value;
+            const uAmp = mountainUniforms.uAmp.value;
 
-      const distortion = new THREE.Vector3(
-        Math.cos(progress * Math.PI * uFreq.x + time) * uAmp.x -
-          Math.cos(movementProgressFix * Math.PI * uFreq.x + time) * uAmp.x,
-        nsin(progress * Math.PI * uFreq.y + time) * uAmp.y -
-          nsin(movementProgressFix * Math.PI * uFreq.y + time) * uAmp.y,
-        nsin(progress * Math.PI * uFreq.z + time) * uAmp.z -
-          nsin(movementProgressFix * Math.PI * uFreq.z + time) * uAmp.z
-      );
-      const lookAtAmp = new THREE.Vector3(2, 2, 2);
-      const lookAtOffset = new THREE.Vector3(0, 0, -5);
-      return distortion.multiply(lookAtAmp).add(lookAtOffset);
-    }
-  },
-  xyDistortion: {
-    uniforms: xyUniforms,
-    getDistortion: `
+            const distortion = new THREE.Vector3(
+                Math.cos(progress * Math.PI * uFreq.x + time) * uAmp.x -
+                Math.cos(movementProgressFix * Math.PI * uFreq.x + time) * uAmp.x,
+                nsin(progress * Math.PI * uFreq.y + time) * uAmp.y -
+                nsin(movementProgressFix * Math.PI * uFreq.y + time) * uAmp.y,
+                nsin(progress * Math.PI * uFreq.z + time) * uAmp.z -
+                nsin(movementProgressFix * Math.PI * uFreq.z + time) * uAmp.z
+            );
+            const lookAtAmp = new THREE.Vector3(2, 2, 2);
+            const lookAtOffset = new THREE.Vector3(0, 0, -5);
+            return distortion.multiply(lookAtAmp).add(lookAtOffset);
+        }
+    },
+    xyDistortion: {
+        uniforms: xyUniforms,
+        getDistortion: `
       uniform vec2 uFreq;
       uniform vec2 uAmp;
       #define PI 3.14159265358979
@@ -124,25 +124,25 @@ const distortions = {
         );
       }
     `,
-    getJS: (progress, time) => {
-      const movementProgressFix = 0.02;
-      const uFreq = xyUniforms.uFreq.value;
-      const uAmp = xyUniforms.uAmp.value;
-      const distortion = new THREE.Vector3(
-        Math.cos(progress * Math.PI * uFreq.x + time) * uAmp.x -
-          Math.cos(movementProgressFix * Math.PI * uFreq.x + time) * uAmp.x,
-        Math.sin(progress * Math.PI * uFreq.y + time + Math.PI / 2) * uAmp.y -
-          Math.sin(movementProgressFix * Math.PI * uFreq.y + time + Math.PI / 2) * uAmp.y,
-        0
-      );
-      const lookAtAmp = new THREE.Vector3(2, 0.4, 1);
-      const lookAtOffset = new THREE.Vector3(0, 0, -3);
-      return distortion.multiply(lookAtAmp).add(lookAtOffset);
-    }
-  },
-  LongRaceDistortion: {
-    uniforms: LongRaceUniforms,
-    getDistortion: `
+        getJS: (progress, time) => {
+            const movementProgressFix = 0.02;
+            const uFreq = xyUniforms.uFreq.value;
+            const uAmp = xyUniforms.uAmp.value;
+            const distortion = new THREE.Vector3(
+                Math.cos(progress * Math.PI * uFreq.x + time) * uAmp.x -
+                Math.cos(movementProgressFix * Math.PI * uFreq.x + time) * uAmp.x,
+                Math.sin(progress * Math.PI * uFreq.y + time + Math.PI / 2) * uAmp.y -
+                Math.sin(movementProgressFix * Math.PI * uFreq.y + time + Math.PI / 2) * uAmp.y,
+                0
+            );
+            const lookAtAmp = new THREE.Vector3(2, 0.4, 1);
+            const lookAtOffset = new THREE.Vector3(0, 0, -3);
+            return distortion.multiply(lookAtAmp).add(lookAtOffset);
+        }
+    },
+    LongRaceDistortion: {
+        uniforms: LongRaceUniforms,
+        getDistortion: `
       uniform vec2 uFreq;
       uniform vec2 uAmp;
       #define PI 3.14159265358979
@@ -155,25 +155,25 @@ const distortions = {
         );
       }
     `,
-    getJS: (progress, time) => {
-      const camProgress = 0.0125;
-      const uFreq = LongRaceUniforms.uFreq.value;
-      const uAmp = LongRaceUniforms.uAmp.value;
-      const distortion = new THREE.Vector3(
-        Math.sin(progress * Math.PI * uFreq.x + time) * uAmp.x -
-          Math.sin(camProgress * Math.PI * uFreq.x + time) * uAmp.x,
-        Math.sin(progress * Math.PI * uFreq.y + time) * uAmp.y -
-          Math.sin(camProgress * Math.PI * uFreq.y + time) * uAmp.y,
-        0
-      );
-      const lookAtAmp = new THREE.Vector3(1, 1, 0);
-      const lookAtOffset = new THREE.Vector3(0, 0, -5);
-      return distortion.multiply(lookAtAmp).add(lookAtOffset);
-    }
-  },
-  turbulentDistortion: {
-    uniforms: turbulentUniforms,
-    getDistortion: `
+        getJS: (progress, time) => {
+            const camProgress = 0.0125;
+            const uFreq = LongRaceUniforms.uFreq.value;
+            const uAmp = LongRaceUniforms.uAmp.value;
+            const distortion = new THREE.Vector3(
+                Math.sin(progress * Math.PI * uFreq.x + time) * uAmp.x -
+                Math.sin(camProgress * Math.PI * uFreq.x + time) * uAmp.x,
+                Math.sin(progress * Math.PI * uFreq.y + time) * uAmp.y -
+                Math.sin(camProgress * Math.PI * uFreq.y + time) * uAmp.y,
+                0
+            );
+            const lookAtAmp = new THREE.Vector3(1, 1, 0);
+            const lookAtOffset = new THREE.Vector3(0, 0, -5);
+            return distortion.multiply(lookAtAmp).add(lookAtOffset);
+        }
+    },
+    turbulentDistortion: {
+        uniforms: turbulentUniforms,
+        getDistortion: `
       uniform vec4 uFreq;
       uniform vec4 uAmp;
       float nsin(float val){
@@ -200,31 +200,31 @@ const distortions = {
         );
       }
     `,
-    getJS: (progress, time) => {
-      const uFreq = turbulentUniforms.uFreq.value;
-      const uAmp = turbulentUniforms.uAmp.value;
+        getJS: (progress, time) => {
+            const uFreq = turbulentUniforms.uFreq.value;
+            const uAmp = turbulentUniforms.uAmp.value;
 
-      const getX = (p) =>
-        Math.cos(Math.PI * p * uFreq.x + time) * uAmp.x +
-        Math.pow(Math.cos(Math.PI * p * uFreq.y + time * (uFreq.y / uFreq.x)), 2) * uAmp.y;
+            const getX = (p) =>
+                Math.cos(Math.PI * p * uFreq.x + time) * uAmp.x +
+                Math.pow(Math.cos(Math.PI * p * uFreq.y + time * (uFreq.y / uFreq.x)), 2) * uAmp.y;
 
-      const getY = (p) =>
-        -nsin(Math.PI * p * uFreq.z + time) * uAmp.z -
-        Math.pow(nsin(Math.PI * p * uFreq.w + time / (uFreq.z / uFreq.w)), 5) * uAmp.w;
+            const getY = (p) =>
+                -nsin(Math.PI * p * uFreq.z + time) * uAmp.z -
+                Math.pow(nsin(Math.PI * p * uFreq.w + time / (uFreq.z / uFreq.w)), 5) * uAmp.w;
 
-      const distortion = new THREE.Vector3(
-        getX(progress) - getX(progress + 0.007),
-        getY(progress) - getY(progress + 0.007),
-        0
-      );
-      const lookAtAmp = new THREE.Vector3(-2, -5, 0);
-      const lookAtOffset = new THREE.Vector3(0, 0, -10);
-      return distortion.multiply(lookAtAmp).add(lookAtOffset);
-    }
-  },
-  deepDistortion: {
-    uniforms: deepUniforms,
-    getDistortion: `
+            const distortion = new THREE.Vector3(
+                getX(progress) - getX(progress + 0.007),
+                getY(progress) - getY(progress + 0.007),
+                0
+            );
+            const lookAtAmp = new THREE.Vector3(-2, -5, 0);
+            const lookAtOffset = new THREE.Vector3(0, 0, -10);
+            return distortion.multiply(lookAtAmp).add(lookAtOffset);
+        }
+    },
+    deepDistortion: {
+        uniforms: deepUniforms,
+        getDistortion: `
       uniform vec4 uFreq;
       uniform vec4 uAmp;
       uniform vec2 uPowY;
@@ -250,29 +250,29 @@ const distortions = {
         );
       }
     `,
-    getJS: (progress, time) => {
-      const uFreq = deepUniforms.uFreq.value;
-      const uAmp = deepUniforms.uAmp.value;
-      const uPowY = deepUniforms.uPowY.value;
+        getJS: (progress, time) => {
+            const uFreq = deepUniforms.uFreq.value;
+            const uAmp = deepUniforms.uAmp.value;
+            const uPowY = deepUniforms.uPowY.value;
 
-      const getX = (p) => Math.sin(p * Math.PI * uFreq.x + time) * uAmp.x;
-      const getY = (p) => Math.pow(p * uPowY.x, uPowY.y) + Math.sin(p * Math.PI * uFreq.y + time) * uAmp.y;
+            const getX = (p) => Math.sin(p * Math.PI * uFreq.x + time) * uAmp.x;
+            const getY = (p) => Math.pow(p * uPowY.x, uPowY.y) + Math.sin(p * Math.PI * uFreq.y + time) * uAmp.y;
 
-      const distortion = new THREE.Vector3(
-        getX(progress) - getX(progress + 0.01),
-        getY(progress) - getY(progress + 0.01),
-        0
-      );
-      const lookAtAmp = new THREE.Vector3(-2, -4, 0);
-      const lookAtOffset = new THREE.Vector3(0, 0, -10);
-      return distortion.multiply(lookAtAmp).add(lookAtOffset);
+            const distortion = new THREE.Vector3(
+                getX(progress) - getX(progress + 0.01),
+                getY(progress) - getY(progress + 0.01),
+                0
+            );
+            const lookAtAmp = new THREE.Vector3(-2, -4, 0);
+            const lookAtOffset = new THREE.Vector3(0, 0, -10);
+            return distortion.multiply(lookAtAmp).add(lookAtOffset);
+        }
     }
-  }
 };
 
 const distortion_uniforms = {
-  uDistortionX: { value: new THREE.Vector2(80, 3) },
-  uDistortionY: { value: new THREE.Vector2(-40, 2.5) }
+    uDistortionX: { value: new THREE.Vector2(80, 3) },
+    uDistortionY: { value: new THREE.Vector2(-40, 2.5) }
 };
 
 const distortion_vertex = `
@@ -297,135 +297,135 @@ const distortion_vertex = `
 `;
 
 function random(base) {
-  if (Array.isArray(base)) {
-    return Math.random() * (base[1] - base[0]) + base[0];
-  }
-  return Math.random() * base;
+    if (Array.isArray(base)) {
+        return Math.random() * (base[1] - base[0]) + base[0];
+    }
+    return Math.random() * base;
 }
 
 function pickRandom(arr) {
-  if (Array.isArray(arr)) {
-    return arr[Math.floor(Math.random() * arr.length)];
-  }
-  return arr;
+    if (Array.isArray(arr)) {
+        return arr[Math.floor(Math.random() * arr.length)];
+    }
+    return arr;
 }
 
 function lerp(current, target, speed = 0.1, limit = 0.001) {
-  let change = (target - current) * speed;
-  if (Math.abs(change) < limit) {
-    change = target - current;
-  }
-  return change;
+    let change = (target - current) * speed;
+    if (Math.abs(change) < limit) {
+        change = target - current;
+    }
+    return change;
 }
 
 class CarLights {
-  constructor(webgl, options, colors, speed, fade) {
-    this.webgl = webgl;
-    this.options = options;
-    this.colors = colors;
-    this.speed = speed;
-    this.fade = fade;
-  }
-
-  init() {
-    const options = this.options;
-    const curve = new THREE.LineCurve3(new THREE.Vector3(0, 0, 0), new THREE.Vector3(0, 0, -1));
-    const geometry = new THREE.TubeGeometry(curve, 40, 1, 8, false);
-
-    const instanced = new THREE.InstancedBufferGeometry().copy(geometry);
-    instanced.instanceCount = options.lightPairsPerRoadWay * 2;
-
-    const laneWidth = options.roadWidth / options.lanesPerRoad;
-
-    const aOffset = [];
-    const aMetrics = [];
-    const aColor = [];
-
-    let colorArray;
-    if (Array.isArray(this.colors)) {
-      colorArray = this.colors.map(c => new THREE.Color(c));
-    } else {
-      colorArray = [new THREE.Color(this.colors)];
+    constructor(webgl, options, colors, speed, fade) {
+        this.webgl = webgl;
+        this.options = options;
+        this.colors = colors;
+        this.speed = speed;
+        this.fade = fade;
     }
 
-    for (let i = 0; i < options.lightPairsPerRoadWay; i++) {
-      const radius = random(options.carLightsRadius);
-      const length = random(options.carLightsLength);
-      const spd = random(this.speed);
+    init() {
+        const options = this.options;
+        const curve = new THREE.LineCurve3(new THREE.Vector3(0, 0, 0), new THREE.Vector3(0, 0, -1));
+        const geometry = new THREE.TubeGeometry(curve, 40, 1, 8, false);
 
-      const carLane = i % options.lanesPerRoad;
-      let laneX = carLane * laneWidth - options.roadWidth / 2 + laneWidth / 2;
+        const instanced = new THREE.InstancedBufferGeometry().copy(geometry);
+        instanced.instanceCount = options.lightPairsPerRoadWay * 2;
 
-      const carWidth = random(options.carWidthPercentage) * laneWidth;
-      const carShiftX = random(options.carShiftX) * laneWidth;
-      laneX += carShiftX;
+        const laneWidth = options.roadWidth / options.lanesPerRoad;
 
-      const offsetY = random(options.carFloorSeparation) + radius * 1.3;
-      const offsetZ = -random(options.length);
+        const aOffset = [];
+        const aMetrics = [];
+        const aColor = [];
 
-      aOffset.push(laneX - carWidth / 2);
-      aOffset.push(offsetY);
-      aOffset.push(offsetZ);
+        let colorArray;
+        if (Array.isArray(this.colors)) {
+            colorArray = this.colors.map(c => new THREE.Color(c));
+        } else {
+            colorArray = [new THREE.Color(this.colors)];
+        }
 
-      aOffset.push(laneX + carWidth / 2);
-      aOffset.push(offsetY);
-      aOffset.push(offsetZ);
+        for (let i = 0; i < options.lightPairsPerRoadWay; i++) {
+            const radius = random(options.carLightsRadius);
+            const length = random(options.carLightsLength);
+            const spd = random(this.speed);
 
-      aMetrics.push(radius);
-      aMetrics.push(length);
-      aMetrics.push(spd);
+            const carLane = i % options.lanesPerRoad;
+            let laneX = carLane * laneWidth - options.roadWidth / 2 + laneWidth / 2;
 
-      aMetrics.push(radius);
-      aMetrics.push(length);
-      aMetrics.push(spd);
+            const carWidth = random(options.carWidthPercentage) * laneWidth;
+            const carShiftX = random(options.carShiftX) * laneWidth;
+            laneX += carShiftX;
 
-      const color = pickRandom(colorArray);
-      aColor.push(color.r);
-      aColor.push(color.g);
-      aColor.push(color.b);
+            const offsetY = random(options.carFloorSeparation) + radius * 1.3;
+            const offsetZ = -random(options.length);
 
-      aColor.push(color.r);
-      aColor.push(color.g);
-      aColor.push(color.b);
+            aOffset.push(laneX - carWidth / 2);
+            aOffset.push(offsetY);
+            aOffset.push(offsetZ);
+
+            aOffset.push(laneX + carWidth / 2);
+            aOffset.push(offsetY);
+            aOffset.push(offsetZ);
+
+            aMetrics.push(radius);
+            aMetrics.push(length);
+            aMetrics.push(spd);
+
+            aMetrics.push(radius);
+            aMetrics.push(length);
+            aMetrics.push(spd);
+
+            const color = pickRandom(colorArray);
+            aColor.push(color.r);
+            aColor.push(color.g);
+            aColor.push(color.b);
+
+            aColor.push(color.r);
+            aColor.push(color.g);
+            aColor.push(color.b);
+        }
+
+        instanced.setAttribute('aOffset', new THREE.InstancedBufferAttribute(new Float32Array(aOffset), 3, false));
+        instanced.setAttribute('aMetrics', new THREE.InstancedBufferAttribute(new Float32Array(aMetrics), 3, false));
+        instanced.setAttribute('aColor', new THREE.InstancedBufferAttribute(new Float32Array(aColor), 3, false));
+
+        const material = new THREE.ShaderMaterial({
+            fragmentShader: carLightsFragment,
+            vertexShader: carLightsVertex,
+            transparent: true,
+            uniforms: Object.assign(
+                {
+                    uTime: { value: 0 },
+                    uTravelLength: { value: options.length },
+                    uFade: { value: this.fade }
+                },
+                this.webgl.fogUniforms,
+                (typeof this.options.distortion === 'object' ? this.options.distortion.uniforms : {}) || {}
+            )
+        });
+
+        material.onBeforeCompile = shader => {
+            shader.vertexShader = shader.vertexShader.replace(
+                '#include <getDistortion_vertex>',
+                typeof this.options.distortion === 'object' ? this.options.distortion.getDistortion : ''
+            );
+        };
+
+        const mesh = new THREE.Mesh(instanced, material);
+        mesh.frustumCulled = false;
+        this.webgl.scene.add(mesh);
+        this.mesh = mesh;
     }
 
-    instanced.setAttribute('aOffset', new THREE.InstancedBufferAttribute(new Float32Array(aOffset), 3, false));
-    instanced.setAttribute('aMetrics', new THREE.InstancedBufferAttribute(new Float32Array(aMetrics), 3, false));
-    instanced.setAttribute('aColor', new THREE.InstancedBufferAttribute(new Float32Array(aColor), 3, false));
-
-    const material = new THREE.ShaderMaterial({
-      fragmentShader: carLightsFragment,
-      vertexShader: carLightsVertex,
-      transparent: true,
-      uniforms: Object.assign(
-        {
-          uTime: { value: 0 },
-          uTravelLength: { value: options.length },
-          uFade: { value: this.fade }
-        },
-        this.webgl.fogUniforms,
-        (typeof this.options.distortion === 'object' ? this.options.distortion.uniforms : {}) || {}
-      )
-    });
-
-    material.onBeforeCompile = shader => {
-      shader.vertexShader = shader.vertexShader.replace(
-        '#include <getDistortion_vertex>',
-        typeof this.options.distortion === 'object' ? this.options.distortion.getDistortion : ''
-      );
-    };
-
-    const mesh = new THREE.Mesh(instanced, material);
-    mesh.frustumCulled = false;
-    this.webgl.scene.add(mesh);
-    this.mesh = mesh;
-  }
-
-  update(time) {
-    if (this.mesh.material.uniforms.uTime) {
-      this.mesh.material.uniforms.uTime.value = time;
+    update(time) {
+        if (this.mesh.material.uniforms.uTime) {
+            this.mesh.material.uniforms.uTime.value = time;
+        }
     }
-  }
 }
 
 const carLightsFragment = `
@@ -478,80 +478,80 @@ const carLightsVertex = `
 `;
 
 class LightsSticks {
-  constructor(webgl, options) {
-    this.webgl = webgl;
-    this.options = options;
-  }
-
-  init() {
-    const options = this.options;
-    const geometry = new THREE.PlaneGeometry(1, 1);
-    const instanced = new THREE.InstancedBufferGeometry().copy(geometry);
-    const totalSticks = options.totalSideLightSticks;
-    instanced.instanceCount = totalSticks;
-
-    const stickoffset = options.length / (totalSticks - 1);
-    const aOffset = [];
-    const aColor = [];
-    const aMetrics = [];
-
-    let colorArray;
-    if (Array.isArray(options.colors.sticks)) {
-      colorArray = options.colors.sticks.map(c => new THREE.Color(c));
-    } else {
-      colorArray = [new THREE.Color(options.colors.sticks)];
+    constructor(webgl, options) {
+        this.webgl = webgl;
+        this.options = options;
     }
 
-    for (let i = 0; i < totalSticks; i++) {
-      const width = random(options.lightStickWidth);
-      const height = random(options.lightStickHeight);
-      aOffset.push((i - 1) * stickoffset * 2 + stickoffset * Math.random());
+    init() {
+        const options = this.options;
+        const geometry = new THREE.PlaneGeometry(1, 1);
+        const instanced = new THREE.InstancedBufferGeometry().copy(geometry);
+        const totalSticks = options.totalSideLightSticks;
+        instanced.instanceCount = totalSticks;
 
-      const color = pickRandom(colorArray);
-      aColor.push(color.r);
-      aColor.push(color.g);
-      aColor.push(color.b);
+        const stickoffset = options.length / (totalSticks - 1);
+        const aOffset = [];
+        const aColor = [];
+        const aMetrics = [];
 
-      aMetrics.push(width);
-      aMetrics.push(height);
+        let colorArray;
+        if (Array.isArray(options.colors.sticks)) {
+            colorArray = options.colors.sticks.map(c => new THREE.Color(c));
+        } else {
+            colorArray = [new THREE.Color(options.colors.sticks)];
+        }
+
+        for (let i = 0; i < totalSticks; i++) {
+            const width = random(options.lightStickWidth);
+            const height = random(options.lightStickHeight);
+            aOffset.push((i - 1) * stickoffset * 2 + stickoffset * Math.random());
+
+            const color = pickRandom(colorArray);
+            aColor.push(color.r);
+            aColor.push(color.g);
+            aColor.push(color.b);
+
+            aMetrics.push(width);
+            aMetrics.push(height);
+        }
+
+        instanced.setAttribute('aOffset', new THREE.InstancedBufferAttribute(new Float32Array(aOffset), 1, false));
+        instanced.setAttribute('aColor', new THREE.InstancedBufferAttribute(new Float32Array(aColor), 3, false));
+        instanced.setAttribute('aMetrics', new THREE.InstancedBufferAttribute(new Float32Array(aMetrics), 2, false));
+
+        const material = new THREE.ShaderMaterial({
+            fragmentShader: sideSticksFragment,
+            vertexShader: sideSticksVertex,
+            side: THREE.DoubleSide,
+            uniforms: Object.assign(
+                {
+                    uTravelLength: { value: options.length },
+                    uTime: { value: 0 }
+                },
+                this.webgl.fogUniforms,
+                (typeof options.distortion === 'object' ? options.distortion.uniforms : {}) || {}
+            )
+        });
+
+        material.onBeforeCompile = shader => {
+            shader.vertexShader = shader.vertexShader.replace(
+                '#include <getDistortion_vertex>',
+                typeof this.options.distortion === 'object' ? this.options.distortion.getDistortion : ''
+            );
+        };
+
+        const mesh = new THREE.Mesh(instanced, material);
+        mesh.frustumCulled = false;
+        this.webgl.scene.add(mesh);
+        this.mesh = mesh;
     }
 
-    instanced.setAttribute('aOffset', new THREE.InstancedBufferAttribute(new Float32Array(aOffset), 1, false));
-    instanced.setAttribute('aColor', new THREE.InstancedBufferAttribute(new Float32Array(aColor), 3, false));
-    instanced.setAttribute('aMetrics', new THREE.InstancedBufferAttribute(new Float32Array(aMetrics), 2, false));
-
-    const material = new THREE.ShaderMaterial({
-      fragmentShader: sideSticksFragment,
-      vertexShader: sideSticksVertex,
-      side: THREE.DoubleSide,
-      uniforms: Object.assign(
-        {
-          uTravelLength: { value: options.length },
-          uTime: { value: 0 }
-        },
-        this.webgl.fogUniforms,
-        (typeof options.distortion === 'object' ? options.distortion.uniforms : {}) || {}
-      )
-    });
-
-    material.onBeforeCompile = shader => {
-      shader.vertexShader = shader.vertexShader.replace(
-        '#include <getDistortion_vertex>',
-        typeof this.options.distortion === 'object' ? this.options.distortion.getDistortion : ''
-      );
-    };
-
-    const mesh = new THREE.Mesh(instanced, material);
-    mesh.frustumCulled = false;
-    this.webgl.scene.add(mesh);
-    this.mesh = mesh;
-  }
-
-  update(time) {
-    if (this.mesh.material.uniforms.uTime) {
-      this.mesh.material.uniforms.uTime.value = time;
+    update(time) {
+        if (this.mesh.material.uniforms.uTime) {
+            this.mesh.material.uniforms.uTime.value = time;
+        }
     }
-  }
 }
 
 const sideSticksVertex = `
@@ -607,87 +607,87 @@ const sideSticksFragment = `
 `;
 
 class Road {
-  constructor(webgl, options) {
-    this.webgl = webgl;
-    this.options = options;
-    this.uTime = { value: 0 };
-  }
-
-  createPlane(side, width, isRoad) {
-    const options = this.options;
-    const segments = 100;
-    const geometry = new THREE.PlaneGeometry(
-      isRoad ? options.roadWidth : options.islandWidth,
-      options.length,
-      20,
-      segments
-    );
-
-    let uniforms = {
-      uTravelLength: { value: options.length },
-      uColor: {
-        value: new THREE.Color(isRoad ? options.colors.roadColor : options.colors.islandColor)
-      },
-      uTime: this.uTime
-    };
-
-    if (isRoad) {
-      uniforms = Object.assign(uniforms, {
-        uLanes: { value: options.lanesPerRoad },
-        uBrokenLinesColor: {
-          value: new THREE.Color(options.colors.brokenLines)
-        },
-        uShoulderLinesColor: {
-          value: new THREE.Color(options.colors.shoulderLines)
-        },
-        uShoulderLinesWidthPercentage: {
-          value: options.shoulderLinesWidthPercentage
-        },
-        uBrokenLinesLengthPercentage: {
-          value: options.brokenLinesLengthPercentage
-        },
-        uBrokenLinesWidthPercentage: {
-          value: options.brokenLinesWidthPercentage
-        }
-      });
+    constructor(webgl, options) {
+        this.webgl = webgl;
+        this.options = options;
+        this.uTime = { value: 0 };
     }
 
-    const material = new THREE.ShaderMaterial({
-      fragmentShader: isRoad ? roadFragment : islandFragment,
-      vertexShader: roadVertex,
-      side: THREE.DoubleSide,
-      uniforms: Object.assign(
-        uniforms,
-        this.webgl.fogUniforms,
-        (typeof options.distortion === 'object' ? options.distortion.uniforms : {}) || {}
-      )
-    });
+    createPlane(side, width, isRoad) {
+        const options = this.options;
+        const segments = 100;
+        const geometry = new THREE.PlaneGeometry(
+            isRoad ? options.roadWidth : options.islandWidth,
+            options.length,
+            20,
+            segments
+        );
 
-    material.onBeforeCompile = shader => {
-      shader.vertexShader = shader.vertexShader.replace(
-        '#include <getDistortion_vertex>',
-        typeof this.options.distortion === 'object' ? this.options.distortion.getDistortion : ''
-      );
-    };
+        let uniforms = {
+            uTravelLength: { value: options.length },
+            uColor: {
+                value: new THREE.Color(isRoad ? options.colors.roadColor : options.colors.islandColor)
+            },
+            uTime: this.uTime
+        };
 
-    const mesh = new THREE.Mesh(geometry, material);
-    mesh.rotation.x = -Math.PI / 2;
-    mesh.position.z = -options.length / 2;
-    mesh.position.x += (this.options.islandWidth / 2 + options.roadWidth / 2) * side;
+        if (isRoad) {
+            uniforms = Object.assign(uniforms, {
+                uLanes: { value: options.lanesPerRoad },
+                uBrokenLinesColor: {
+                    value: new THREE.Color(options.colors.brokenLines)
+                },
+                uShoulderLinesColor: {
+                    value: new THREE.Color(options.colors.shoulderLines)
+                },
+                uShoulderLinesWidthPercentage: {
+                    value: options.shoulderLinesWidthPercentage
+                },
+                uBrokenLinesLengthPercentage: {
+                    value: options.brokenLinesLengthPercentage
+                },
+                uBrokenLinesWidthPercentage: {
+                    value: options.brokenLinesWidthPercentage
+                }
+            });
+        }
 
-    this.webgl.scene.add(mesh);
-    return mesh;
-  }
+        const material = new THREE.ShaderMaterial({
+            fragmentShader: isRoad ? roadFragment : islandFragment,
+            vertexShader: roadVertex,
+            side: THREE.DoubleSide,
+            uniforms: Object.assign(
+                uniforms,
+                this.webgl.fogUniforms,
+                (typeof options.distortion === 'object' ? options.distortion.uniforms : {}) || {}
+            )
+        });
 
-  init() {
-    this.leftRoadWay = this.createPlane(-1, this.options.roadWidth, true);
-    this.rightRoadWay = this.createPlane(1, this.options.roadWidth, true);
-    this.island = this.createPlane(0, this.options.islandWidth, false);
-  }
+        material.onBeforeCompile = shader => {
+            shader.vertexShader = shader.vertexShader.replace(
+                '#include <getDistortion_vertex>',
+                typeof this.options.distortion === 'object' ? this.options.distortion.getDistortion : ''
+            );
+        };
 
-  update(time) {
-    this.uTime.value = time;
-  }
+        const mesh = new THREE.Mesh(geometry, material);
+        mesh.rotation.x = -Math.PI / 2;
+        mesh.position.z = -options.length / 2;
+        mesh.position.x += (this.options.islandWidth / 2 + options.roadWidth / 2) * side;
+
+        this.webgl.scene.add(mesh);
+        return mesh;
+    }
+
+    init() {
+        this.leftRoadWay = this.createPlane(-1, this.options.roadWidth, true);
+        this.rightRoadWay = this.createPlane(1, this.options.roadWidth, true);
+        this.island = this.createPlane(0, this.options.islandWidth, false);
+    }
+
+    update(time) {
+        this.uTime.value = time;
+    }
 }
 
 const roadBaseFragment = `
@@ -707,8 +707,8 @@ const roadBaseFragment = `
 `;
 
 const islandFragment = roadBaseFragment
-  .replace('#include <roadMarkings_fragment>', '')
-  .replace('#include <roadMarkings_vars>', '');
+    .replace('#include <roadMarkings_fragment>', '')
+    .replace('#include <roadMarkings_vars>', '');
 
 const roadMarkings_vars = `
   uniform float uLanes;
@@ -739,8 +739,8 @@ const roadMarkings_fragment = `
 `;
 
 const roadFragment = roadBaseFragment
-  .replace('#include <roadMarkings_fragment>', roadMarkings_fragment)
-  .replace('#include <roadMarkings_vars>', roadMarkings_vars);
+    .replace('#include <roadMarkings_fragment>', roadMarkings_fragment)
+    .replace('#include <roadMarkings_vars>', roadMarkings_vars);
 
 const roadVertex = `
   #define USE_FOG;
@@ -764,338 +764,368 @@ const roadVertex = `
 `;
 
 function resizeRendererToDisplaySize(renderer, setSize) {
-  const canvas = renderer.domElement;
-  const width = canvas.clientWidth;
-  const height = canvas.clientHeight;
-  const needResize = canvas.width !== width || canvas.height !== height;
-  if (needResize) {
-    setSize(width, height, false);
-  }
-  return needResize;
+    const canvas = renderer.domElement;
+    const width = canvas.clientWidth;
+    const height = canvas.clientHeight;
+    const needResize = canvas.width !== width || canvas.height !== height;
+    if (needResize) {
+        setSize(width, height, false);
+    }
+    return needResize;
 }
 
 class App {
-  constructor(container, options) {
-    this.options = options;
-    if (!this.options.distortion) {
-      this.options.distortion = {
-        uniforms: distortion_uniforms,
-        getDistortion: distortion_vertex
-      };
-    }
-    this.container = container;
+    constructor(container, options) {
+        this.options = options;
+        if (!this.options.distortion) {
+            this.options.distortion = {
+                uniforms: distortion_uniforms,
+                getDistortion: distortion_vertex
+            };
+        }
+        this.container = container;
 
-    this.renderer = new THREE.WebGLRenderer({
-      antialias: false,
-      alpha: true
-    });
-    this.renderer.setSize(container.offsetWidth, container.offsetHeight, false);
-    this.renderer.setPixelRatio(window.devicePixelRatio);
+        // Get container dimensions, fallback to parent or viewport if needed
+        const rect = container.getBoundingClientRect();
+        const width = rect.width || container.offsetWidth || window.innerWidth;
+        const height = rect.height || container.offsetHeight || window.innerHeight;
 
-    this.composer = new EffectComposer(this.renderer);
-    container.appendChild(this.renderer.domElement);
+        this.renderer = new THREE.WebGLRenderer({
+            antialias: false,
+            alpha: true
+        });
+        this.renderer.setSize(width, height, false);
+        this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
-    this.camera = new THREE.PerspectiveCamera(options.fov, container.offsetWidth / container.offsetHeight, 0.1, 10000);
-    this.camera.position.z = -5;
-    this.camera.position.y = 8;
-    this.camera.position.x = 0;
+        this.composer = new EffectComposer(this.renderer);
+        container.appendChild(this.renderer.domElement);
 
-    this.scene = new THREE.Scene();
-    this.scene.background = null;
+        this.camera = new THREE.PerspectiveCamera(options.fov, width / height, 0.1, 10000);
+        this.camera.position.z = -5;
+        this.camera.position.y = 8;
+        this.camera.position.x = 0;
 
-    const fog = new THREE.Fog(options.colors.background, options.length * 0.2, options.length * 500);
-    this.scene.fog = fog;
+        this.scene = new THREE.Scene();
+        this.scene.background = null;
 
-    this.fogUniforms = {
-      fogColor: { value: fog.color },
-      fogNear: { value: fog.near },
-      fogFar: { value: fog.far }
-    };
+        const fog = new THREE.Fog(options.colors.background, options.length * 0.2, options.length * 500);
+        this.scene.fog = fog;
 
-    this.clock = new THREE.Clock();
-    this.assets = {};
-    this.disposed = false;
+        this.fogUniforms = {
+            fogColor: { value: fog.color },
+            fogNear: { value: fog.near },
+            fogFar: { value: fog.far }
+        };
 
-    this.road = new Road(this, options);
-    this.leftCarLights = new CarLights(
-      this,
-      options,
-      options.colors.leftCars,
-      options.movingAwaySpeed,
-      new THREE.Vector2(0, 1 - options.carLightsFade)
-    );
-    this.rightCarLights = new CarLights(
-      this,
-      options,
-      options.colors.rightCars,
-      options.movingCloserSpeed,
-      new THREE.Vector2(1, 0 + options.carLightsFade)
-    );
-    this.leftSticks = new LightsSticks(this, options);
+        this.clock = new THREE.Clock();
+        this.assets = {};
+        this.disposed = false;
 
-    this.fovTarget = options.fov;
-    this.speedUpTarget = 0;
-    this.speedUp = 0;
-    this.timeOffset = 0;
+        this.road = new Road(this, options);
+        this.leftCarLights = new CarLights(
+            this,
+            options,
+            options.colors.leftCars,
+            options.movingAwaySpeed,
+            new THREE.Vector2(0, 1 - options.carLightsFade)
+        );
+        this.rightCarLights = new CarLights(
+            this,
+            options,
+            options.colors.rightCars,
+            options.movingCloserSpeed,
+            new THREE.Vector2(1, 0 + options.carLightsFade)
+        );
+        this.leftSticks = new LightsSticks(this, options);
 
-    this.tick = this.tick.bind(this);
-    this.init = this.init.bind(this);
-    this.setSize = this.setSize.bind(this);
-    this.onMouseDown = this.onMouseDown.bind(this);
-    this.onMouseUp = this.onMouseUp.bind(this);
+        this.fovTarget = options.fov;
+        this.speedUpTarget = 0;
+        this.speedUp = 0;
+        this.timeOffset = 0;
 
-    this.onTouchStart = this.onTouchStart.bind(this);
-    this.onTouchEnd = this.onTouchEnd.bind(this);
-    this.onContextMenu = this.onContextMenu.bind(this);
-    this.onWindowResize = this.onWindowResize.bind(this);
+        this.tick = this.tick.bind(this);
+        this.init = this.init.bind(this);
+        this.setSize = this.setSize.bind(this);
+        this.onMouseDown = this.onMouseDown.bind(this);
+        this.onMouseUp = this.onMouseUp.bind(this);
 
-    window.addEventListener('resize', this.onWindowResize);
-  }
+        this.onTouchStart = this.onTouchStart.bind(this);
+        this.onTouchEnd = this.onTouchEnd.bind(this);
+        this.onContextMenu = this.onContextMenu.bind(this);
+        this.onWindowResize = this.onWindowResize.bind(this);
 
-  onWindowResize() {
-    const width = this.container.offsetWidth;
-    const height = this.container.offsetHeight;
-
-    this.renderer.setSize(width, height);
-    this.camera.aspect = width / height;
-    this.camera.updateProjectionMatrix();
-    this.composer.setSize(width, height);
-  }
-
-  initPasses() {
-    this.renderPass = new RenderPass(this.scene, this.camera);
-    this.bloomPass = new EffectPass(
-      this.camera,
-      new BloomEffect({
-        luminanceThreshold: 0.2,
-        luminanceSmoothing: 0,
-        resolutionScale: 1
-      })
-    );
-
-    const smaaPass = new EffectPass(
-      this.camera,
-      new SMAAEffect({
-        preset: SMAAPreset.MEDIUM
-      })
-    );
-    this.renderPass.renderToScreen = false;
-    this.bloomPass.renderToScreen = false;
-    smaaPass.renderToScreen = true;
-
-    this.composer.addPass(this.renderPass);
-    this.composer.addPass(this.bloomPass);
-    this.composer.addPass(smaaPass);
-  }
-
-  loadAssets() {
-    const assets = this.assets;
-    return new Promise(resolve => {
-      const manager = new THREE.LoadingManager(resolve);
-
-      const searchImage = new Image();
-      const areaImage = new Image();
-      assets.smaa = {};
-
-      searchImage.addEventListener('load', function () {
-        assets.smaa.search = this;
-        manager.itemEnd('smaa-search');
-      });
-
-      areaImage.addEventListener('load', function () {
-        assets.smaa.area = this;
-        manager.itemEnd('smaa-area');
-      });
-
-      manager.itemStart('smaa-search');
-      manager.itemStart('smaa-area');
-
-      searchImage.src = SMAAEffect.searchImageDataURL;
-      areaImage.src = SMAAEffect.areaImageDataURL;
-    });
-  }
-
-  init() {
-    this.initPasses();
-    const options = this.options;
-    this.road.init();
-    this.leftCarLights.init();
-    this.leftCarLights.mesh.position.setX(-options.roadWidth / 2 - options.islandWidth / 2);
-
-    this.rightCarLights.init();
-    this.rightCarLights.mesh.position.setX(options.roadWidth / 2 + options.islandWidth / 2);
-
-    this.leftSticks.init();
-    this.leftSticks.mesh.position.setX(-(options.roadWidth + options.islandWidth / 2));
-
-    this.container.addEventListener('mousedown', this.onMouseDown);
-    this.container.addEventListener('mouseup', this.onMouseUp);
-    this.container.addEventListener('mouseout', this.onMouseUp);
-
-    this.container.addEventListener('touchstart', this.onTouchStart, {
-      passive: true
-    });
-    this.container.addEventListener('touchend', this.onTouchEnd, {
-      passive: true
-    });
-    this.container.addEventListener('touchcancel', this.onTouchEnd, {
-      passive: true
-    });
-    this.container.addEventListener('contextmenu', this.onContextMenu);
-
-    this.tick();
-  }
-
-  onMouseDown(ev) {
-    if (this.options.onSpeedUp) this.options.onSpeedUp(ev);
-    this.fovTarget = this.options.fovSpeedUp;
-    this.speedUpTarget = this.options.speedUp;
-  }
-
-  onMouseUp(ev) {
-    if (this.options.onSlowDown) this.options.onSlowDown(ev);
-    this.fovTarget = this.options.fov;
-    this.speedUpTarget = 0;
-  }
-
-  onTouchStart(ev) {
-    if (this.options.onSpeedUp) this.options.onSpeedUp(ev);
-    this.fovTarget = this.options.fovSpeedUp;
-    this.speedUpTarget = this.options.speedUp;
-  }
-
-  onTouchEnd(ev) {
-    if (this.options.onSlowDown) this.options.onSlowDown(ev);
-    this.fovTarget = this.options.fov;
-    this.speedUpTarget = 0;
-  }
-
-  onContextMenu(ev) {
-    ev.preventDefault();
-  }
-
-  update(delta) {
-    const lerpPercentage = Math.exp(-(-60 * Math.log2(1 - 0.1)) * delta);
-    this.speedUp += lerp(this.speedUp, this.speedUpTarget, lerpPercentage, 0.00001);
-    this.timeOffset += this.speedUp * delta;
-    const time = this.clock.elapsedTime + this.timeOffset;
-
-    this.rightCarLights.update(time);
-    this.leftCarLights.update(time);
-    this.leftSticks.update(time);
-    this.road.update(time);
-
-    let updateCamera = false;
-    const fovChange = lerp(this.camera.fov, this.fovTarget, lerpPercentage);
-    if (fovChange !== 0) {
-      this.camera.fov += fovChange * delta * 6;
-      updateCamera = true;
+        window.addEventListener('resize', this.onWindowResize);
     }
 
-    if (typeof this.options.distortion === 'object' && this.options.distortion.getJS) {
-      const distortion = this.options.distortion.getJS(0.025, time);
-      this.camera.lookAt(
-        new THREE.Vector3(
-          this.camera.position.x + distortion.x,
-          this.camera.position.y + distortion.y,
-          this.camera.position.z + distortion.z
-        )
-      );
-      updateCamera = true;
+    //   onWindowResize() {
+    //     const rect = this.container.getBoundingClientRect();
+    //     const width = rect.width || this.container.offsetWidth;
+    //     const height = rect.height || this.container.offsetHeight;
+
+    //     if (width > 0 && height > 0) {
+    //       this.renderer.setSize(width, height, false);
+    //       this.camera.aspect = width / height;
+    //       this.camera.updateProjectionMatrix();
+    //       this.composer.setSize(width, height);
+    //     }
+    //   }
+
+    onWindowResize() {
+        const width = this.container.offsetWidth;
+        const height = this.container.offsetHeight;
+
+        this.renderer.setSize(width, height);
+        this.camera.aspect = width / height;
+        this.camera.updateProjectionMatrix();
+        this.composer.setSize(width, height);
     }
 
-    if (updateCamera) {
-      this.camera.updateProjectionMatrix();
+    initPasses() {
+        this.renderPass = new RenderPass(this.scene, this.camera);
+        this.bloomPass = new EffectPass(
+            this.camera,
+            new BloomEffect({
+                luminanceThreshold: 0.2,
+                luminanceSmoothing: 0,
+                resolutionScale: 1
+            })
+        );
+
+        const smaaPass = new EffectPass(
+            this.camera,
+            new SMAAEffect({
+                preset: SMAAPreset.MEDIUM
+            })
+        );
+        this.renderPass.renderToScreen = false;
+        this.bloomPass.renderToScreen = false;
+        smaaPass.renderToScreen = true;
+
+        this.composer.addPass(this.renderPass);
+        this.composer.addPass(this.bloomPass);
+        this.composer.addPass(smaaPass);
     }
-  }
 
-  render(delta) {
-    this.composer.render(delta);
-  }
+    loadAssets() {
+        const assets = this.assets;
+        return new Promise(resolve => {
+            const manager = new THREE.LoadingManager(resolve);
 
-  dispose() {
-    this.disposed = true;
+            const searchImage = new Image();
+            const areaImage = new Image();
+            assets.smaa = {};
 
-    if (this.renderer) {
-      this.renderer.dispose();
+            searchImage.addEventListener('load', function () {
+                assets.smaa.search = this;
+                manager.itemEnd('smaa-search');
+            });
+
+            areaImage.addEventListener('load', function () {
+                assets.smaa.area = this;
+                manager.itemEnd('smaa-area');
+            });
+
+            manager.itemStart('smaa-search');
+            manager.itemStart('smaa-area');
+
+            searchImage.src = SMAAEffect.searchImageDataURL;
+            areaImage.src = SMAAEffect.areaImageDataURL;
+        });
     }
-    if (this.composer) {
-      this.composer.dispose();
-    }
-    if (this.scene) {
-      this.scene.clear();
+
+    init() {
+        this.initPasses();
+        const options = this.options;
+        this.road.init();
+        this.leftCarLights.init();
+        this.leftCarLights.mesh.position.setX(-options.roadWidth / 2 - options.islandWidth / 2);
+
+        this.rightCarLights.init();
+        this.rightCarLights.mesh.position.setX(options.roadWidth / 2 + options.islandWidth / 2);
+
+        this.leftSticks.init();
+        this.leftSticks.mesh.position.setX(-(options.roadWidth + options.islandWidth / 2));
+
+        this.container.addEventListener('mousedown', this.onMouseDown);
+        this.container.addEventListener('mouseup', this.onMouseUp);
+        this.container.addEventListener('mouseout', this.onMouseUp);
+
+        this.container.addEventListener('touchstart', this.onTouchStart, {
+            passive: true
+        });
+        this.container.addEventListener('touchend', this.onTouchEnd, {
+            passive: true
+        });
+        this.container.addEventListener('touchcancel', this.onTouchEnd, {
+            passive: true
+        });
+        this.container.addEventListener('contextmenu', this.onContextMenu);
+
+        this.tick();
     }
 
-    window.removeEventListener('resize', this.onWindowResize);
-    if (this.container) {
-      this.container.removeEventListener('mousedown', this.onMouseDown);
-      this.container.removeEventListener('mouseup', this.onMouseUp);
-      this.container.removeEventListener('mouseout', this.onMouseUp);
-
-      this.container.removeEventListener('touchstart', this.onTouchStart);
-      this.container.removeEventListener('touchend', this.onTouchEnd);
-      this.container.removeEventListener('touchcancel', this.onTouchEnd);
-      this.container.removeEventListener('contextmenu', this.onContextMenu);
+    onMouseDown(ev) {
+        if (this.options.onSpeedUp) this.options.onSpeedUp(ev);
+        this.fovTarget = this.options.fovSpeedUp;
+        this.speedUpTarget = this.options.speedUp;
     }
-  }
 
-  setSize(width, height, updateStyles) {
-    this.composer.setSize(width, height, updateStyles);
-  }
-
-  tick() {
-    if (this.disposed || !this) return;
-    if (resizeRendererToDisplaySize(this.renderer, this.setSize)) {
-      const canvas = this.renderer.domElement;
-      this.camera.aspect = canvas.clientWidth / canvas.clientHeight;
-      this.camera.updateProjectionMatrix();
+    onMouseUp(ev) {
+        if (this.options.onSlowDown) this.options.onSlowDown(ev);
+        this.fovTarget = this.options.fov;
+        this.speedUpTarget = 0;
     }
-    const delta = this.clock.getDelta();
-    this.render(delta);
-    this.update(delta);
-    requestAnimationFrame(this.tick);
-  }
+
+    onTouchStart(ev) {
+        if (this.options.onSpeedUp) this.options.onSpeedUp(ev);
+        this.fovTarget = this.options.fovSpeedUp;
+        this.speedUpTarget = this.options.speedUp;
+    }
+
+    onTouchEnd(ev) {
+        if (this.options.onSlowDown) this.options.onSlowDown(ev);
+        this.fovTarget = this.options.fov;
+        this.speedUpTarget = 0;
+    }
+
+    onContextMenu(ev) {
+        ev.preventDefault();
+    }
+
+    update(delta) {
+        const lerpPercentage = Math.exp(-(-60 * Math.log2(1 - 0.1)) * delta);
+        this.speedUp += lerp(this.speedUp, this.speedUpTarget, lerpPercentage, 0.00001);
+        this.timeOffset += this.speedUp * delta;
+        const time = this.clock.elapsedTime + this.timeOffset;
+
+        this.rightCarLights.update(time);
+        this.leftCarLights.update(time);
+        this.leftSticks.update(time);
+        this.road.update(time);
+
+        let updateCamera = false;
+        const fovChange = lerp(this.camera.fov, this.fovTarget, lerpPercentage);
+        if (fovChange !== 0) {
+            this.camera.fov += fovChange * delta * 6;
+            updateCamera = true;
+        }
+
+        if (typeof this.options.distortion === 'object' && this.options.distortion.getJS) {
+            const distortion = this.options.distortion.getJS(0.025, time);
+            this.camera.lookAt(
+                new THREE.Vector3(
+                    this.camera.position.x + distortion.x,
+                    this.camera.position.y + distortion.y,
+                    this.camera.position.z + distortion.z
+                )
+            );
+            updateCamera = true;
+        }
+
+        if (updateCamera) {
+            this.camera.updateProjectionMatrix();
+        }
+    }
+
+    render(delta) {
+        this.composer.render(delta);
+    }
+
+    dispose() {
+        this.disposed = true;
+
+        if (this.renderer) {
+            this.renderer.dispose();
+        }
+        if (this.composer) {
+            this.composer.dispose();
+        }
+        if (this.scene) {
+            this.scene.clear();
+        }
+
+        window.removeEventListener('resize', this.onWindowResize);
+        if (this.container) {
+            this.container.removeEventListener('mousedown', this.onMouseDown);
+            this.container.removeEventListener('mouseup', this.onMouseUp);
+            this.container.removeEventListener('mouseout', this.onMouseUp);
+
+            this.container.removeEventListener('touchstart', this.onTouchStart);
+            this.container.removeEventListener('touchend', this.onTouchEnd);
+            this.container.removeEventListener('touchcancel', this.onTouchEnd);
+            this.container.removeEventListener('contextmenu', this.onContextMenu);
+        }
+    }
+
+    setSize(width, height, updateStyles) {
+        this.composer.setSize(width, height, updateStyles);
+    }
+
+    tick() {
+        if (this.disposed || !this) return;
+        if (resizeRendererToDisplaySize(this.renderer, this.setSize)) {
+            const canvas = this.renderer.domElement;
+            this.camera.aspect = canvas.clientWidth / canvas.clientHeight;
+            this.camera.updateProjectionMatrix();
+        }
+        const delta = this.clock.getDelta();
+        this.render(delta);
+        this.update(delta);
+        requestAnimationFrame(this.tick);
+    }
 }
 
 const Hyperspeed = ({ effectOptions = {} }) => {
-  const mergedOptions = {
-    ...defaultOptions,
-    ...effectOptions
-  };
-  const hyperspeed = useRef(null);
-  const appRef = useRef(null);
-
-  useEffect(() => {
-    if (appRef.current) {
-      appRef.current.dispose();
-      const container = document.getElementById('lights');
-      if (container) {
-        while (container.firstChild) {
-          container.removeChild(container.firstChild);
-        }
-      }
-    }
-
-    const container = hyperspeed.current;
-    if (!container) return;
-
-    const options = { ...mergedOptions };
-    if (typeof options.distortion === 'string') {
-      options.distortion = distortions[options.distortion];
-    }
-
-    const myApp = new App(container, options);
-    appRef.current = myApp;
-    myApp.loadAssets().then(myApp.init);
-
-    return () => {
-      if (appRef.current) {
-        appRef.current.dispose();
-      }
+    const mergedOptions = {
+        ...defaultOptions,
+        ...effectOptions
     };
-  }, []);
+    const hyperspeed = useRef(null);
+    const appRef = useRef(null);
 
-  return <div id="lights" className="w-full h-full" ref={hyperspeed}></div>;
+    useEffect(() => {
+        if (appRef.current) {
+            appRef.current.dispose();
+            const container = document.getElementById('lights');
+            if (container) {
+                while (container.firstChild) {
+                    container.removeChild(container.firstChild);
+                }
+            }
+        }
+
+        const container = hyperspeed.current;
+        if (!container) return;
+
+        const options = { ...mergedOptions };
+        if (typeof options.distortion === 'string') {
+            options.distortion = distortions[options.distortion];
+        }
+
+        // Delay initialization to ensure container has correct dimensions
+        const initTimeout = setTimeout(() => {
+            const myApp = new App(container, options);
+            appRef.current = myApp;
+            myApp.loadAssets().then(() => {
+                myApp.init();
+                // Force a resize after initialization to ensure correct dimensions
+                setTimeout(() => {
+                    if (appRef.current && !appRef.current.disposed) {
+                        appRef.current.onWindowResize();
+                    }
+                }, 0); // original value was 100, changed to 0 for immediate resize. this was introduced to let the DOM settle before resize.
+            });
+        }, 0); // original value was 500, changed to 0 for immediate init. this was introduced to let the DOM settle before init.
+
+        return () => {
+            clearTimeout(initTimeout);
+            if (appRef.current) {
+                appRef.current.dispose();
+            }
+        };
+    }, []);
+
+    return <div id="lights" className="w-full h-full absolute inset-0" ref={hyperspeed} style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0 }}></div>;
 };
 
 export default Hyperspeed;

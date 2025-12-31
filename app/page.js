@@ -346,8 +346,8 @@ export default function Home() {
       </AnimatePresence>
 
       {/* Hero Section */}
-      <section ref={heroRef} className="relative h-screen flex items-center justify-center">
-        <div className="absolute inset-0 z-0">
+      <section ref={heroRef} className="relative h-screen flex items-center justify-center overflow-hidden">
+        <div className="absolute inset-0 z-0 overflow-hidden">
           <Hyperspeed
             effectOptions={{
               distortion: "turbulentDistortion",
@@ -483,7 +483,7 @@ export default function Home() {
       </section>
 
       {/* Services Section */}
-      <section className="relative py-32 px-4">
+      <section className="relative py-32 px-4" id="services">
         <div className="absolute inset-0 grid-bg opacity-30" />
         <Spotlight className="max-w-7xl mx-auto relative z-10">
           <FadeIn>
@@ -564,7 +564,7 @@ export default function Home() {
       </section>
 
       {/* Process Section */}
-      <section className="relative py-32 px-4">
+      <section className="relative py-32 px-4" id="process">
         <div className="absolute inset-0 grid-bg opacity-30" />
         <div className="max-w-7xl mx-auto relative z-10">
           <FadeIn>
@@ -605,7 +605,7 @@ export default function Home() {
       </section>
 
       {/* Testimonials */}
-      <section className="relative py-32 px-4 border-y border-cyan-400/20">
+      <section className="relative py-32 px-4 border-y border-cyan-400/20" id="testimonials">
         <div className="absolute inset-0 grid-bg opacity-20" />
         <div className="max-w-7xl mx-auto relative z-10">
           <FadeIn>
@@ -648,7 +648,7 @@ export default function Home() {
       </section>
 
       {/* CTA Section */}
-      <section className="relative py-32 px-4">
+      <section className="relative py-32 px-4" id="contact">
         <div className="absolute inset-0 grid-bg opacity-40" />
         <div className="max-w-5xl mx-auto text-center relative z-10">
           <FadeIn>
