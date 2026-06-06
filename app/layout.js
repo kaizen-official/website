@@ -19,11 +19,11 @@ export const metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
     default:
-      "Prime Meridian Systems — Operational Software for Bharat's MSMEs",
+      "Prime Meridian Systems - Operational Software for Bharat's MSMEs",
     template: "%s · Prime Meridian Systems",
   },
   description:
-    "Prime Meridian is the operational coordination layer for Indian MSMEs — a vertically standardized software stack across inventory, dispatch, procurement, workflows and finance. Two AI-native ERPs: Meridian Build (real estate) and Meridian Process (chemical manufacturing).",
+    "Prime Meridian is the operational coordination layer for Indian MSMEs - a vertically standardized software stack across inventory, dispatch, procurement, workflows and finance. Two AI-native ERPs: Meridian Build (real estate) and Meridian Process (chemical manufacturing).",
   keywords: [
     "MSME operational software",
     "MSME ERP India",
@@ -49,7 +49,7 @@ export const metadata = {
     locale: "en_US",
     url: SITE_URL,
     siteName: "Prime Meridian Systems",
-    title: "Prime Meridian Systems — Operational Software for Bharat's MSMEs",
+    title: "Prime Meridian Systems - Operational Software for Bharat's MSMEs",
     description:
       "The operational coordination layer for Indian MSMEs. A vertically standardized software stack across inventory, dispatch, procurement, workflows and finance.",
     images: [
@@ -57,15 +57,15 @@ export const metadata = {
         url: "/opengraph-image",
         width: 1200,
         height: 630,
-        alt: "Prime Meridian Systems — Operational Software for Bharat's MSMEs",
+        alt: "Prime Meridian Systems - Operational Software for Bharat's MSMEs",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Prime Meridian Systems — Operational Software for Bharat's MSMEs",
+    title: "Prime Meridian Systems - Operational Software for Bharat's MSMEs",
     description:
-      "The operational coordination layer for Indian MSMEs — vertically standardized ERP and workflow software.",
+      "The operational coordination layer for Indian MSMEs - vertically standardized ERP and workflow software.",
     creator: "@primemeridian",
     images: ["/opengraph-image"],
   },
@@ -97,7 +97,7 @@ const orgJsonLd = {
   alternateName: "PMS",
   url: SITE_URL,
   description:
-    "Operational software for Bharat's MSMEs — the operational coordination layer across inventory, dispatch, procurement, workflows and finance.",
+    "Operational software for Bharat's MSMEs - the operational coordination layer across inventory, dispatch, procurement, workflows and finance.",
   slogan: "Enabling structured growth for Bharat's MSMEs.",
   knowsAbout: [
     "MSME Operational Software",

@@ -41,17 +41,17 @@ const COLS = [
 export default function SiteFooter() {
   return (
     <footer className="bg-night text-white">
-      <div className="mx-auto max-w-[84rem] px-5 py-16 md:px-8 md:py-20">
+      <div className="mx-auto max-w-336 px-5 py-16 md:px-8 md:py-20">
         <div className="grid grid-cols-2 gap-10 sm:grid-cols-3 lg:grid-cols-6">
           <div className="col-span-2">
             <Wordmark invert className="h-6" />
             <p className="mt-5 max-w-xs text-[0.95rem] leading-relaxed text-white/55">
-              The operational coordination layer for Bharat&apos;s MSMEs — enabling
+              The operational coordination layer for Bharat&apos;s MSMEs - enabling
               structured growth.
             </p>
-            <p className="mt-6 font-mono text-xs tracking-wide text-white/35">
+            {/* <p className="mt-6 font-mono text-xs tracking-wide text-white/35">
               Operational Software · Bharat
-            </p>
+            </p> */}
           </div>
 
           {COLS.map((col) => (

@@ -3,7 +3,7 @@ import Reveal from "./Reveal";
 const MOATS = [
   {
     title: "Workflow depth",
-    body: "We orchestrate execution, not records. Most ERPs digitize accounts — Prime Meridian runs dispatch, approvals, inventory and collections.",
+    body: "We orchestrate execution, not records. Most ERPs digitize accounts - Prime Meridian runs dispatch, approvals, inventory and collections.",
     glyph: (
       <>
         <circle cx="16" cy="9" r="4" />
@@ -15,7 +15,7 @@ const MOATS = [
   },
   {
     title: "Vertical specialization",
-    body: "Built for industry-specific reality. Generic software breaks under operational variability — we ship per vertical, from chemical floors to real-estate approvals.",
+    body: "Built for industry-specific reality. Generic software breaks under operational variability - we ship per vertical, from chemical floors to real-estate approvals.",
     glyph: (
       <>
         <rect x="6" y="6" width="20" height="20" rx="4" />
@@ -35,7 +35,7 @@ const MOATS = [
   },
   {
     title: "Switching costs",
-    body: "Once embedded, switching is painful. Operational systems become deep infrastructure — and every deployment compounds reusable software leverage.",
+    body: "Once embedded, switching is painful. Operational systems become deep infrastructure - and every deployment compounds reusable software leverage.",
     glyph: (
       <>
         <path d="M12 2l8 3v6c0 5-3.5 8-8 11-4.5-3-8-6-8-11V5l8-3z" />
@@ -48,14 +48,14 @@ const MOATS = [
 export default function Capabilities() {
   return (
     <section id="approach" className="scroll-mt-28 px-5 py-20 md:py-28">
-      <div className="mx-auto max-w-[84rem]">
+      <div className="mx-auto max-w-336">
         <Reveal className="mb-12 max-w-2xl">
           <p className="mono-label mb-4">12 · Why we win</p>
           <h2 className="display text-balance text-4xl md:text-5xl">
             Our moat is operational embedding.
           </h2>
           <p className="mt-5 max-w-xl text-lg leading-relaxed text-muted">
-            The winner in this market will own workflows — not just records.
+            The winner in this market will own workflows - not just records.
           </p>
         </Reveal>
 

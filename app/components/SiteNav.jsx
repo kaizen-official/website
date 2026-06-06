@@ -111,7 +111,7 @@ export default function SiteNav() {
           {/* wordmark */}
           <a
             href="#top"
-            aria-label="Prime Meridian Systems — home"
+            aria-label="Prime Meridian Systems - home"
             className="shrink-0 pl-2"
           >
             <Wordmark className="h-[1.45rem] w-auto" />
@@ -128,7 +128,7 @@ export default function SiteNav() {
           >
             <span
               aria-hidden="true"
-              className="absolute top-1/2 -z-0 h-9 -translate-y-1/2 rounded-full bg-black/[0.06] transition-all duration-300 ease-out"
+              className="absolute top-1/2 z-0 h-9 -translate-y-1/2 rounded-full bg-black/6 transition-all duration-300 ease-out"
               style={{
                 left: hl.left,
                 width: hl.width,
@@ -159,11 +159,11 @@ export default function SiteNav() {
           <div className="hidden shrink-0 items-center gap-1.5 md:flex">
             <a
               href="#demo"
-              className="rounded-full px-3.5 py-2 text-[0.93rem] text-ink-2 transition-colors hover:bg-black/[0.05]"
+              className="rounded-full px-3.5 py-2 text-[0.93rem] text-ink-2 transition-colors hover:bg-black/5"
             >
               Try it live
             </a>
-            <Pill href="#demo" variant="primary" className="!text-[0.88rem]">
+            <Pill href="#demo" variant="primary" className="text-[0.88rem]!">
               Book a demo
             </Pill>
           </div>
@@ -171,7 +171,7 @@ export default function SiteNav() {
           {/* mobile toggle */}
           <button
             onClick={() => setOpen((v) => !v)}
-            className="relative z-50 flex h-10 w-10 items-center justify-center rounded-full transition-colors hover:bg-black/[0.05] md:hidden"
+            className="relative z-50 flex h-10 w-10 items-center justify-center rounded-full transition-colors hover:bg-black/5 md:hidden"
             aria-label="Toggle menu"
             aria-expanded={open}
           >

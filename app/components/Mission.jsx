@@ -24,7 +24,7 @@ export default function Mission() {
           delay={160}
           className="mx-auto mt-7 max-w-2xl text-lg leading-relaxed text-muted"
         >
-          Indian MSMEs run on fragmented operational systems — every tool runs in
+          Indian MSMEs run on fragmented operational systems - every tool runs in
           isolation, with humans as the integration layer. Complexity scales faster
           than software adoption.
         </Reveal>

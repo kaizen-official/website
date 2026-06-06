@@ -1,5 +1,5 @@
 /**
- * Prime Meridian Systems wordmark — geometric mark (globe + 0° meridian line)
+ * Prime Meridian Systems wordmark - geometric mark (globe + 0° meridian line)
  * paired with a bold lowercase logotype, echoing Sanas's clean geometric mark.
  */
 export default function Wordmark({ className = "", invert = false }) {

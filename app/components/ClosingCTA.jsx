@@ -1,21 +1,40 @@
-import Aurora from "./Aurora";
+import { AuroraBars } from "@/components/unlumen-ui/aurora-bars";
 import Pill from "./Pill";
 import Reveal from "./Reveal";
+
+const CTA_AURORA_COLORS = [
+  "#bcd6ff",
+  "#cdc9ff",
+  "#e4ccff",
+  "#ffd0e6",
+  "#ffeacf",
+  "#0a0a0a00",
+];
 
 export default function ClosingCTA() {
   return (
     <section id="demo" className="scroll-mt-24 px-5 pb-8 pt-4">
-      <div className="relative mx-auto max-w-[84rem] overflow-hidden rounded-[2.5rem] bg-night px-6 py-24 text-center md:py-32">
-        {/* iridescent rings on dark */}
-        <div className="pointer-events-none absolute left-1/2 top-1/2 h-[130vmin] w-[130vmin] -translate-x-1/2 -translate-y-1/2">
-          <div className="iris-wash absolute left-1/2 top-1/2 h-[75%] w-[75%] -translate-x-1/2 -translate-y-1/2 !opacity-30" />
-          <Aurora />
-          <div className="iris-grain absolute inset-0 !opacity-[0.08]" />
+      <div className="relative mx-auto max-w-336 overflow-hidden rounded-[2.5rem] bg-night px-6 py-24 text-center">
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0"
+        >
+          <AuroraBars
+            background="#0a0a0a"
+            barCount={32}
+            blur={8}
+            colors={CTA_AURORA_COLORS}
+            gap={3}
+            maxHeightRatio={1.25}
+            minHeightRatio={0.14}
+            speed={0.38}
+          />
+          <div className="iris-grain absolute inset-0 opacity-[0.08]" />
           <div
             className="absolute inset-0"
             style={{
               background:
-                "radial-gradient(closest-side, rgba(10,10,10,0.82) 26%, rgba(10,10,10,0.38) 50%, transparent 72%)",
+                "radial-gradient(ellipse 75% 65% at 50% 42%, rgba(10,10,10,0.78) 22%, rgba(10,10,10,0.35) 48%, transparent 74%)",
             }}
           />
         </div>
@@ -38,7 +57,7 @@ export default function ClosingCTA() {
             className="mx-auto mt-6 max-w-xl text-balance text-lg text-white/65"
           >
             Building the operational coordination layer for operationally complex
-            Indian MSMEs — from operational embedding to infrastructure scale.
+            Indian MSMEs - from operational embedding to infrastructure scale.
           </Reveal>
           <Reveal
             delay={200}

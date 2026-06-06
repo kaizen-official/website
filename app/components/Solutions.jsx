@@ -4,7 +4,7 @@ const PRODUCTS = [
   {
     tag: "AI-Native · Real Estate ERP",
     name: "Meridian Build",
-    body: "An end-to-end operating system for real-estate developers — projects, sales, procurement and finance on one workflow layer.",
+    body: "An end-to-end operating system for real-estate developers - projects, sales, procurement and finance on one workflow layer.",
     features: [
       "End-to-end project management",
       "Sales & CRM workflows",
@@ -16,7 +16,7 @@ const PRODUCTS = [
   {
     tag: "AI-Native · Chemical Factory ERP",
     name: "Meridian Process",
-    body: "A factory-wide intelligence platform for chemical manufacturers — production, materials and power unified in real time.",
+    body: "A factory-wide intelligence platform for chemical manufacturers - production, materials and power unified in real time.",
     features: [
       "Production planning & execution",
       "Inventory & raw-material tracking",
@@ -33,7 +33,7 @@ export default function Solutions() {
       id="products"
       className="scroll-mt-28 border-t border-line bg-surface px-5 py-20 md:py-28"
     >
-      <div className="mx-auto max-w-[84rem]">
+      <div className="mx-auto max-w-336">
         <Reveal className="mb-12 flex flex-col justify-between gap-5 md:flex-row md:items-end">
           <div>
             <p className="mono-label mb-4">06 · Products</p>
@@ -42,7 +42,7 @@ export default function Solutions() {
             </h2>
           </div>
           <p className="max-w-sm text-muted">
-            Proving the embedding-to-productization model in real industry — two
+            Proving the embedding-to-productization model in real industry - two
             verticals on one operational platform.
           </p>
         </Reveal>
@@ -58,7 +58,7 @@ export default function Solutions() {
                 className="relative h-44 overflow-hidden md:h-52"
                 style={{ background: p.grad }}
               >
-                <div className="pointer-events-none absolute left-1/2 top-[115%] h-[42rem] w-[42rem] -translate-x-1/2 -translate-y-1/2 opacity-80">
+                <div className="pointer-events-none absolute left-1/2 top-[115%] h-168 w-2xl -translate-x-1/2 -translate-y-1/2 opacity-80">
                   <div className="aurora absolute inset-0 aurora-spin" />
                 </div>
                 <div

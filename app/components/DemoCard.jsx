@@ -4,7 +4,7 @@ import { useState } from "react";
 import Pill from "./Pill";
 import Reveal from "./Reveal";
 
-// The Prime Meridian stack — five layers on one operational core.
+// The Prime Meridian stack - five layers on one operational core.
 const LAYERS = {
   Coordination: {
     code: "L01",
@@ -34,7 +34,7 @@ const LAYERS = {
   "ERP Core": {
     code: "L03",
     name: "ERP Core",
-    blurb: "The system of record — inventory through to compliance.",
+    blurb: "The system of record - inventory through to compliance.",
     items: ["Inventory", "Billing", "Receivables", "Payroll", "Compliance"],
     note: "one source of operational truth",
   },
@@ -65,7 +65,7 @@ export default function DemoCard() {
 
   return (
     <section id="platform" className="scroll-mt-28 px-5 py-16 md:py-24">
-      <div className="mx-auto max-w-[84rem]">
+      <div className="mx-auto max-w-336">
         <Reveal className="mb-10 flex flex-col items-start justify-between gap-5 md:flex-row md:items-end">
           <div>
             <p className="mono-label mb-3">05 · The stack</p>
@@ -74,12 +74,12 @@ export default function DemoCard() {
             </h2>
           </div>
           <p className="max-w-sm text-muted">
-            A vertically standardized operational software stack for Indian MSMEs —
+            A vertically standardized operational software stack for Indian MSMEs -
             five layers on one core.
           </p>
         </Reveal>
 
-        <Reveal className="card overflow-hidden !rounded-[2rem]">
+        <Reveal className="card overflow-hidden rounded-4xl!">
           <div className="grid grid-cols-1 lg:grid-cols-[20rem_1fr]">
             {/* layer selector */}
             <div className="flex flex-col gap-2 border-b border-line bg-surface-2 p-5 lg:border-b-0 lg:border-r lg:p-7">
@@ -124,7 +124,7 @@ export default function DemoCard() {
                 <span className="h-3 w-3 rounded-full bg-white/20" />
                 <span className="h-3 w-3 rounded-full bg-white/20" />
                 <span className="ml-3 font-mono text-xs text-white/40">
-                  meridian — {data.code.toLowerCase()}
+                  meridian - {data.code.toLowerCase()}
                 </span>
               </div>
 
@@ -170,7 +170,7 @@ export default function DemoCard() {
               </div>
 
               <div className="mt-8">
-                <Pill href="#demo" variant="on-dark" className="!text-[0.9rem]">
+                <Pill href="#demo" variant="on-dark" className="text-[0.9rem]!">
                   Book a demo
                 </Pill>
               </div>
