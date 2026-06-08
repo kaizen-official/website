@@ -1,34 +1,38 @@
 "use client";
 
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import Pill from "./Pill";
 import Aurora from "./Aurora";
 import Wordmark from "./Wordmark";
 
 const LINKS = [
-  { label: "Platform", href: "#platform" },
-  { label: "Products", href: "#products" },
-  { label: "Why we win", href: "#approach" },
-  { label: "Market", href: "#market" },
-  { label: "Contact", href: "#demo" },
+  { label: "About us", href: "/about" },
+  { label: "Our offerings", href: "/offerings" },
+  { label: "Why we win", href: "/why-we-win" },
+  { label: "Contact us", href: "/contact" },
 ];
 
 export default function SiteNav() {
+  const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
-  const [active, setActive] = useState(LINKS[0].href);
   const [hl, setHl] = useState({ left: 0, width: 0, ready: false });
 
   const listRef = useRef(null);
   const linkRefs = useRef([]);
   const hoverRef = useRef(null);
 
+  const activeHref =
+    LINKS.find((l) => pathname === l.href || pathname.startsWith(`${l.href}/`))
+      ?.href ?? "";
+
   const activeIdx = Math.max(
     0,
-    LINKS.findIndex((l) => l.href === active)
+    LINKS.findIndex((l) => l.href === activeHref)
   );
 
-  // move the sliding highlight to a given link index
   const moveTo = (i) => {
     const el = linkRefs.current[i];
     const list = listRef.current;
@@ -38,7 +42,6 @@ export default function SiteNav() {
     setHl({ left: r.left - lr.left, width: r.width, ready: true });
   };
 
-  // scroll state
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 12);
     onScroll();
@@ -46,46 +49,34 @@ export default function SiteNav() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // scroll-spy → active section
   useEffect(() => {
-    const ids = LINKS.map((l) => l.href.slice(1));
-    const els = ids
-      .map((id) => document.getElementById(id))
-      .filter(Boolean);
-    if (!els.length) return;
-    const io = new IntersectionObserver(
-      (entries) => {
-        const visible = entries
-          .filter((e) => e.isIntersecting)
-          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
-        if (visible) setActive("#" + visible.target.id);
-      },
-      { rootMargin: "-45% 0px -50% 0px", threshold: [0, 0.25, 0.6] }
-    );
-    els.forEach((el) => io.observe(el));
-    return () => io.disconnect();
-  }, []);
-
-  // keep highlight aligned to active link (when not hovering) + on resize/condense
-  useEffect(() => {
-    const target = hoverRef.current ?? activeIdx;
+    const target = hoverRef.current ?? (activeHref ? activeIdx : -1);
+    if (target < 0) {
+      setHl((h) => ({ ...h, ready: false }));
+      return;
+    }
     const id = requestAnimationFrame(() => moveTo(target));
     return () => cancelAnimationFrame(id);
-  }, [activeIdx, scrolled]);
+  }, [activeIdx, activeHref, scrolled]);
 
   useEffect(() => {
-    const onResize = () => moveTo(hoverRef.current ?? activeIdx);
+    const onResize = () => {
+      const target = hoverRef.current ?? (activeHref ? activeIdx : -1);
+      if (target >= 0) moveTo(target);
+    };
     window.addEventListener("resize", onResize);
     return () => window.removeEventListener("resize", onResize);
-  }, [activeIdx]);
+  }, [activeIdx, activeHref]);
 
-  // lock scroll when mobile menu open
   useEffect(() => {
     document.body.style.overflow = open ? "hidden" : "";
     return () => {
       document.body.style.overflow = "";
     };
   }, [open]);
+
+  const isHome = pathname === "/";
+  const navSolid = scrolled || !isHome;
 
   return (
     <>
@@ -97,32 +88,34 @@ export default function SiteNav() {
           className="flex w-full items-center justify-between gap-4 rounded-full px-3 py-2 transition-[max-width,background-color,box-shadow,border-color] duration-500 ease-out"
           style={{
             maxWidth: scrolled ? "60rem" : "84rem",
-            backgroundColor: scrolled ? "rgba(255,255,255,0.72)" : "transparent",
-            backdropFilter: scrolled ? "blur(16px) saturate(1.4)" : "none",
-            WebkitBackdropFilter: scrolled ? "blur(16px) saturate(1.4)" : "none",
-            border: scrolled
+            backgroundColor: navSolid
+              ? "rgba(255,255,255,0.72)"
+              : "transparent",
+            backdropFilter: navSolid ? "blur(16px) saturate(1.4)" : "none",
+            WebkitBackdropFilter: navSolid
+              ? "blur(16px) saturate(1.4)"
+              : "none",
+            border: navSolid
               ? "1px solid rgba(0,0,0,0.07)"
               : "1px solid transparent",
-            boxShadow: scrolled
+            boxShadow: navSolid
               ? "0 10px 40px -22px rgba(0,0,0,0.35)"
               : "none",
           }}
         >
-          {/* wordmark */}
-          <a
-            href="#top"
+          <Link
+            href="/"
             aria-label="Prime Meridian Systems - home"
             className="shrink-0 pl-2"
           >
-            <Wordmark className="h-[1.45rem] w-auto" />
-          </a>
+            <Wordmark className="h-10 w-auto" />
+          </Link>
 
-          {/* center links with sliding highlight */}
           <div
             ref={listRef}
             onMouseLeave={() => {
               hoverRef.current = null;
-              moveTo(activeIdx);
+              if (activeHref) moveTo(activeIdx);
             }}
             className="relative hidden items-center lg:flex"
           >
@@ -132,14 +125,16 @@ export default function SiteNav() {
               style={{
                 left: hl.left,
                 width: hl.width,
-                opacity: hl.ready ? 1 : 0,
+                opacity: hl.ready && activeHref ? 1 : 0,
               }}
             />
             {LINKS.map((l, i) => (
-              <a
+              <Link
                 key={l.href}
                 href={l.href}
-                ref={(el) => (linkRefs.current[i] = el)}
+                ref={(el) => {
+                  linkRefs.current[i] = el;
+                }}
                 onMouseEnter={() => {
                   hoverRef.current = i;
                   moveTo(i);
@@ -147,32 +142,26 @@ export default function SiteNav() {
                 className="relative z-10 rounded-full px-4 py-2 text-[0.93rem] transition-colors duration-200"
                 style={{
                   color:
-                    active === l.href ? "var(--ink)" : "var(--muted)",
+                    activeHref === l.href ? "var(--ink)" : "var(--muted)",
                 }}
               >
                 {l.label}
-              </a>
+              </Link>
             ))}
           </div>
 
-          {/* right actions */}
-          <div className="hidden shrink-0 items-center gap-1.5 md:flex">
-            <a
-              href="#demo"
-              className="rounded-full px-3.5 py-2 text-[0.93rem] text-ink-2 transition-colors hover:bg-black/5"
-            >
-              Try it live
-            </a>
-            <Pill href="#demo" variant="primary" className="text-[0.88rem]!">
+          <div className="hidden shrink-0 items-center md:flex">
+            <Pill href="/contact" variant="primary" className="text-[0.88rem]!">
               Book a demo
             </Pill>
           </div>
 
-          {/* mobile toggle */}
           <button
+            type="button"
             onClick={() => setOpen((v) => !v)}
             className="relative z-50 flex h-10 w-10 items-center justify-center rounded-full transition-colors hover:bg-black/5 md:hidden"
             aria-label="Toggle menu"
+            title="Toggle menu"
             aria-expanded={open}
           >
             <div className="flex flex-col items-center gap-[5px]">
@@ -195,14 +184,10 @@ export default function SiteNav() {
         </div>
       </header>
 
-      {/* full-screen mobile menu */}
       <div
         className="fixed inset-0 z-40 md:hidden"
-        style={{
-          pointerEvents: open ? "auto" : "none",
-        }}
+        style={{ pointerEvents: open ? "auto" : "none" }}
       >
-        {/* backdrop */}
         <div
           onClick={() => setOpen(false)}
           className="absolute inset-0 transition-opacity duration-500"
@@ -213,7 +198,6 @@ export default function SiteNav() {
             WebkitBackdropFilter: "blur(20px)",
           }}
         />
-        {/* aurora field in the menu */}
         <div
           className="pointer-events-none absolute -right-1/3 -top-1/4 h-[100vmin] w-[100vmin] transition-opacity duration-700"
           style={{ opacity: open ? 0.8 : 0 }}
@@ -221,10 +205,9 @@ export default function SiteNav() {
           <Aurora />
         </div>
 
-        {/* links */}
         <nav className="relative flex h-full flex-col justify-center gap-1 px-7">
           {LINKS.map((l, i) => (
-            <a
+            <Link
               key={l.href}
               href={l.href}
               onClick={() => setOpen(false)}
@@ -236,7 +219,7 @@ export default function SiteNav() {
               }}
             >
               {l.label}
-            </a>
+            </Link>
           ))}
 
           <div
@@ -248,20 +231,13 @@ export default function SiteNav() {
             }}
           >
             <Pill
-              href="#demo"
+              href="/contact"
               variant="primary"
               className="w-fit"
               onClick={() => setOpen(false)}
             >
               Book a demo
             </Pill>
-            <a
-              href="#demo"
-              onClick={() => setOpen(false)}
-              className="w-fit text-lg text-muted"
-            >
-              Try it live →
-            </a>
           </div>
         </nav>
       </div>

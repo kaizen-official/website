@@ -1,13 +1,11 @@
 "use client";
 import * as React from "react";
-import { motion, useAnimationFrame } from "motion/react";
+import { useAnimationFrame } from "motion/react";
 
 import { cn } from "@/lib/utils";
 
 /** two sine waves per bar for organic movement */
 function barHeight(index, total, time, minH, maxH) {
-  // Arch envelope: tallest in the centre, shorter on edges
-  // arch envelope: tallest in centre, shorter on edges
   const norm = index / (total - 1);
   const arch = Math.sin(norm * Math.PI);
 
@@ -22,6 +20,19 @@ function barHeight(index, total, time, minH, maxH) {
   const blended = arch * 0.65 + wave * 0.35;
 
   return minH + blended * (maxH - minH);
+}
+
+function buildHeights(barCount, time, minH, maxH) {
+  const heights = [];
+  for (let i = 0; i < barCount; i += 1) {
+    heights.push(barHeight(i, barCount, time, minH, maxH));
+  }
+  return heights;
+}
+
+function heightPercent(fraction) {
+  const value = Math.round(fraction * 10000) / 100;
+  return `${value.toFixed(2)}%`;
 }
 
 const DEFAULT_VIGNETTE =
@@ -40,18 +51,21 @@ export function AuroraBars({
   vignette = DEFAULT_VIGNETTE,
   className
 }) {
-  const containerRef = React.useRef(null);
-  const [heights, setHeights] = React.useState(() =>
-    Array.from({ length: barCount }, (_, i) =>
-      barHeight(i, barCount, 0, minHeightRatio, maxHeightRatio)));
-
+  const animateRef = React.useRef(false);
   const timeRef = React.useRef(0);
+  const [heights, setHeights] = React.useState(() =>
+    buildHeights(barCount, 0, minHeightRatio, maxHeightRatio));
+
+  React.useEffect(() => {
+    animateRef.current = true;
+  }, []);
 
   useAnimationFrame((_, delta) => {
+    if (!animateRef.current) return;
     timeRef.current += (delta / 1000) * speed;
-    const t = timeRef.current;
-    setHeights(Array.from({ length: barCount }, (_, i) =>
-      barHeight(i, barCount, t, minHeightRatio, maxHeightRatio)));
+    setHeights(
+      buildHeights(barCount, timeRef.current, minHeightRatio, maxHeightRatio)
+    );
   });
 
   const gradientStop = colors
@@ -61,39 +75,39 @@ export function AuroraBars({
 
   return (
     <div
-      ref={containerRef}
-      className={cn("relative w-full h-full overflow-hidden", className)}
-      style={{ background }}>
+      className={cn("relative h-full w-full overflow-hidden", className)}
+      style={{ backgroundColor: background }}
+    >
       <div className="absolute inset-0 flex items-end">
-        {Array.from({ length: barCount }).map((_, i) => {
-          const heightFraction = heights[i] ?? maxHeightRatio;
-          return (
+        {heights.map((heightFraction, i) => (
+          <div
+            key={i}
+            className="flex-1"
+            style={{
+              height: "100%",
+              display: "flex",
+              alignItems: "flex-end",
+              padding: `0 ${gap / 2}px`,
+            }}
+          >
             <div
-              key={i}
-              className="flex-1"
               style={{
-                height: "100%",
-                display: "flex",
-                alignItems: "flex-end",
-                padding: `0 ${gap / 2}px`,
-              }}>
-              <motion.div
-                style={{
-                  width: "100%",
-                  height: `${heightFraction * 100}%`,
-                  background: gradient,
-                  borderRadius: "9999px 9999px 0 0",
-                  filter: `blur(${blur}px)`,
-                  opacity: barOpacity,
-                }} />
-            </div>
-          );
-        })}
+                width: "100%",
+                height: heightPercent(heightFraction),
+                backgroundImage: gradient,
+                borderTopLeftRadius: "9999px",
+                borderTopRightRadius: "9999px",
+                filter: `blur(${blur}px)`,
+                opacity: barOpacity,
+              }}
+            />
+          </div>
+        ))}
       </div>
       {vignette ? (
         <div
           className="pointer-events-none absolute inset-0"
-          style={{ background: vignette }}
+          style={{ backgroundImage: vignette }}
         />
       ) : null}
     </div>

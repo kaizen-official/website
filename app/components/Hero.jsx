@@ -21,7 +21,7 @@ export default function Hero() {
         aria-hidden="true"
         className="pointer-events-none absolute inset-0 -z-10 bg-bg"
       >
-        <div className="absolute inset-x-0 bottom-0 h-[92%]">
+        <div className="absolute inset-x-0 bottom-0 h-[72%]">
           <AuroraBars
             background="transparent"
             barCount={30}
@@ -29,9 +29,9 @@ export default function Hero() {
             blur={3}
             colors={HERO_AURORA_COLORS}
             gap={2}
-            maxHeightRatio={0.94}
-            minHeightRatio={0.42}
-            speed={5.45}
+            maxHeightRatio={1}
+            minHeightRatio={0.3}
+            speed={5.5}
             vignette={false}
           />
         </div>
@@ -52,36 +52,18 @@ export default function Hero() {
         />
       </div>
 
-      {/* news banner */}
-      {/* <Reveal>
-        <a
-          href="#products"
-          className="group mb-9 inline-flex items-center gap-2.5 rounded-full border border-line-strong bg-surface/80 py-1.5 pl-2 pr-4 text-sm backdrop-blur-sm transition-colors hover:bg-surface"
-        >
-          <span className="rounded-full bg-ink px-2.5 py-0.5 text-xs font-medium text-white">
-            Live
-          </span>
-          <span className="text-ink-2">
-            Meridian Build &amp; Meridian Process - two vertical ERPs, one core
-          </span>
-          <span className="text-muted transition-transform duration-300 group-hover:translate-x-0.5">
-            →
-          </span>
-        </a>
-      </Reveal> */}
-
-      {/* <Reveal as="p" delay={40} className="mono-label mb-5">
-        Operational Software · Bharat
-      </Reveal> */}
+      <Reveal as="p" delay={20} className="mono-label mb-5">
+        AI-native systems · Bharat
+      </Reveal>
 
       <Reveal
         as="h1"
         delay={60}
-        className="display text-balance text-[3.1rem] leading-[0.95] sm:text-7xl md:text-[5.3rem] lg:text-[6.2rem]"
+        className="display text-balance text-[2.6rem] leading-[0.98] sm:text-6xl md:text-[4.6rem] lg:text-[5.4rem]"
       >
-        Structured growth
+        Enabling Intelligent Growth
         <br />
-        for Bharat&apos;s MSMEs.
+        for Bharat&apos;s Businesses.
       </Reveal>
 
       <Reveal
@@ -89,20 +71,19 @@ export default function Hero() {
         delay={140}
         className="mt-7 max-w-3xl text-balance text-lg leading-relaxed text-muted md:text-xl"
       >
-        Prime Meridian is the operational coordination layer for Indian MSMEs -
-        people, workflows, inventory, dispatch and finance on one vertically
-        standardized stack.
+        We build AI-native systems and intelligence platforms that help
+        Bharat&apos;s businesses operate and grow more intelligently.
       </Reveal>
 
       <Reveal
         delay={220}
         className="mt-10 flex flex-col items-center gap-3 sm:flex-row"
       >
-        <Pill href="#demo" variant="primary">
-          Book a demo
+        <Pill href="/offerings" variant="primary">
+          Our offerings
         </Pill>
-        <Pill href="#platform" variant="secondary">
-          See the stack
+        <Pill href="/contact" variant="secondary">
+          Contact us
         </Pill>
       </Reveal>
     </section>

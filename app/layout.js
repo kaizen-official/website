@@ -13,27 +13,27 @@ const geistMono = Geist_Mono({
   display: "swap",
 });
 
-const SITE_URL = "https://primemeridiansystems.com";
+const SITE_URL = "https://www.primemeridiansystems.in";
 
 export const metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
     default:
-      "Prime Meridian Systems - Operational Software for Bharat's MSMEs",
+      "Prime Meridian Systems - AI-Native Systems & Intelligence for Bharat's Businesses",
     template: "%s · Prime Meridian Systems",
   },
   description:
-    "Prime Meridian is the operational coordination layer for Indian MSMEs - a vertically standardized software stack across inventory, dispatch, procurement, workflows and finance. Two AI-native ERPs: Meridian Build (real estate) and Meridian Process (chemical manufacturing).",
+    "Prime Meridian builds AI-native business systems and operational intelligence platforms for Bharat's businesses. Forward-deployed engineering, Meridian Build, Meridian Process, IoT integration, and intelligence layers for SAP, Oracle, Tally, and more.",
   keywords: [
-    "MSME operational software",
-    "MSME ERP India",
-    "vertical ERP",
-    "real estate ERP",
-    "chemical manufacturing ERP",
-    "workflow software for MSMEs",
-    "inventory and dispatch software",
-    "operational coordination layer",
-    "Bharat MSME software",
+    "AI-native business systems India",
+    "operational intelligence platform",
+    "forward deployed engineering",
+    "Meridian Build real estate ERP",
+    "Meridian Process manufacturing ERP",
+    "IoT operational intelligence",
+    "ERP intelligence layer India",
+    "SAP Oracle Tally integration",
+    "Bharat business software",
     "Prime Meridian Systems",
   ],
   authors: [{ name: "Prime Meridian Systems" }],
@@ -49,23 +49,25 @@ export const metadata = {
     locale: "en_US",
     url: SITE_URL,
     siteName: "Prime Meridian Systems",
-    title: "Prime Meridian Systems - Operational Software for Bharat's MSMEs",
+    title:
+      "Prime Meridian Systems - Enabling Intelligent Growth for Bharat's Businesses",
     description:
-      "The operational coordination layer for Indian MSMEs. A vertically standardized software stack across inventory, dispatch, procurement, workflows and finance.",
+      "AI-native systems and intelligence platforms that help Bharat's businesses operate and grow more intelligently.",
     images: [
       {
         url: "/opengraph-image",
         width: 1200,
         height: 630,
-        alt: "Prime Meridian Systems - Operational Software for Bharat's MSMEs",
+        alt: "Prime Meridian Systems - AI-Native Systems for Bharat's Businesses",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Prime Meridian Systems - Operational Software for Bharat's MSMEs",
+    title:
+      "Prime Meridian Systems - Enabling Intelligent Growth for Bharat's Businesses",
     description:
-      "The operational coordination layer for Indian MSMEs - vertically standardized ERP and workflow software.",
+      "AI-native systems and operational intelligence platforms for Bharat's businesses.",
     creator: "@primemeridian",
     images: ["/opengraph-image"],
   },
@@ -81,7 +83,8 @@ export const metadata = {
     },
   },
   icons: {
-    icon: "/favicon.ico",
+    icon: "/icon.png",
+    apple: "/icon.png",
   },
 };
 
@@ -96,15 +99,18 @@ const orgJsonLd = {
   name: "Prime Meridian Systems",
   alternateName: "PMS",
   url: SITE_URL,
+  logo: `${SITE_URL}/logo-horizontal.png`,
   description:
-    "Operational software for Bharat's MSMEs - the operational coordination layer across inventory, dispatch, procurement, workflows and finance.",
-  slogan: "Enabling structured growth for Bharat's MSMEs.",
+    "AI-native systems and intelligence platforms that help Bharat's businesses operate and grow more intelligently.",
+  slogan: "Enabling Intelligent Growth for Bharat's Businesses.",
   knowsAbout: [
-    "MSME Operational Software",
-    "Vertical ERP",
-    "Real Estate ERP",
-    "Chemical Manufacturing ERP",
-    "Workflow Orchestration",
+    "AI-Native Business Systems",
+    "Operational Intelligence Platform",
+    "Forward Deployed Engineering",
+    "Meridian Build",
+    "Meridian Process",
+    "IoT Integration",
+    "ERP Intelligence Layer",
   ],
   sameAs: [
     "https://x.com/primemeridian",

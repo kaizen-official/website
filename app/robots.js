@@ -1,4 +1,4 @@
-const SITE_URL = "https://primemeridiansystems.com";
+const SITE_URL = "https://www.primemeridiansystems.in";
 
 export default function robots() {
   return {

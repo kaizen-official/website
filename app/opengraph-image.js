@@ -1,6 +1,9 @@
+import { readFile } from "node:fs/promises";
+import { join } from "node:path";
 import { ImageResponse } from "next/og";
 
-export const alt = "Prime Meridian Systems - AI Product Research Lab";
+export const alt =
+  "Prime Meridian Systems — Enabling Intelligent Growth for Bharat's Businesses";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -11,7 +14,12 @@ const RINGS = [
   { d: 260, c: "#d9deff" },
 ];
 
-export default function OpengraphImage() {
+export default async function OpengraphImage() {
+  const logoData = await readFile(
+    join(process.cwd(), "public/logo-horizontal.png")
+  );
+  const logoSrc = `data:image/png;base64,${logoData.toString("base64")}`;
+
   return new ImageResponse(
     (
       <div
@@ -49,15 +57,19 @@ export default function OpengraphImage() {
             alignItems: "center",
             zIndex: 10,
             background: "#f4f4f2",
-            padding: "24px 48px",
+            padding: "32px 48px",
             borderRadius: 24,
           }}
         >
-          <div style={{ fontSize: 76, fontWeight: 700, letterSpacing: -3 }}>
-            prime meridian
-          </div>
-          <div style={{ fontSize: 27, color: "#6b6b6b", marginTop: 12 }}>
-            Operational Software for Bharat&apos;s MSMEs
+          <img
+            src={logoSrc}
+            width={560}
+            height={129}
+            alt=""
+            style={{ objectFit: "contain" }}
+          />
+          <div style={{ fontSize: 27, color: "#6b6b6b", marginTop: 20 }}>
+            AI-native systems &amp; operational intelligence
           </div>
         </div>
 
@@ -71,7 +83,7 @@ export default function OpengraphImage() {
             letterSpacing: 2,
           }}
         >
-          ENABLING STRUCTURED GROWTH
+          ENABLING INTELLIGENT GROWTH
         </div>
       </div>
     ),

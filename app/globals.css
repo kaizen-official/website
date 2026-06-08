@@ -347,6 +347,129 @@ body {
   }
 }
 
+/* ---------- approach flow (why we win) ---------- */
+
+.approach-flow {
+  position: relative;
+}
+
+.approach-track {
+  position: relative;
+  align-items: center;
+}
+
+.approach-rail {
+  position: absolute;
+  left: 2.5rem;
+  right: 2.5rem;
+  top: 50%;
+  height: 1px;
+  margin-top: -0.5px;
+  background: var(--line-strong);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 1.2s var(--ease-out);
+  z-index: 0;
+  pointer-events: none;
+}
+
+.approach-rail-active {
+  transform: scaleX(1);
+}
+
+.approach-step {
+  opacity: 0;
+  transform: translateY(14px);
+  transition:
+    opacity 700ms var(--ease-out),
+    transform 700ms var(--ease-out);
+}
+
+.approach-step-active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.approach-icon-slot {
+  z-index: 1;
+}
+
+.approach-orb {
+  background: radial-gradient(
+    circle at 50% 50%,
+    var(--iris-sky) 0%,
+    var(--iris-lav) 42%,
+    var(--iris-mint) 78%
+  );
+  opacity: 0;
+  filter: blur(14px);
+  transform: scale(0.75);
+  transition:
+    opacity 800ms var(--ease-out),
+    transform 800ms var(--ease-out);
+}
+
+.approach-orb-active {
+  opacity: 0.5;
+  transform: scale(1.15);
+}
+
+.approach-icon-ring {
+  box-shadow: 0 8px 28px -16px rgba(0, 0, 0, 0.12);
+}
+
+.approach-arrow {
+  opacity: 0;
+  transform: scale(0.5);
+  transition:
+    opacity 450ms var(--ease-out),
+    transform 450ms var(--ease-out);
+  z-index: 2;
+  position: relative;
+}
+
+.approach-arrow::before {
+  content: "";
+  position: absolute;
+  inset: 0.35rem 0;
+  background: var(--bg);
+  z-index: -1;
+}
+
+.approach-flow .card .approach-arrow::before {
+  background: var(--surface);
+}
+
+.approach-arrow-active {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.approach-arrow-path {
+  stroke-dasharray: 20;
+  stroke-dashoffset: 20;
+  transition: stroke-dashoffset 500ms var(--ease-out);
+}
+
+.approach-arrow-active .approach-arrow-path {
+  stroke-dashoffset: 0;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .approach-step-active .approach-icon-ring {
+    animation: approach-float 5s var(--ease-in-out) infinite alternate;
+  }
+}
+
+@keyframes approach-float {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-4px);
+  }
+}
+
 /* ---------- reduced motion ---------- */
 
 @media (prefers-reduced-motion: reduce) {
@@ -361,5 +484,18 @@ body {
   .reveal {
     transition: opacity 300ms ease;
     transform: none;
+  }
+  .approach-step,
+  .approach-arrow,
+  .approach-orb,
+  .approach-rail {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+    animation: none !important;
+  }
+  .approach-arrow-path {
+    stroke-dashoffset: 0 !important;
+    transition: none !important;
   }
 }
