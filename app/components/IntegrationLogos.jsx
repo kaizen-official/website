@@ -1,9 +1,9 @@
 const LOGOS = [
-  { name: "SAP", src: "/logos/sap.svg", h: 22 },
-  { name: "Oracle", src: "/logos/oracle.svg", h: 20 },
-  { name: "Tally", src: "/logos/tally.svg", h: 40 },
-  { name: "Odoo", src: "/logos/odoo.svg", h: 24 },
-  { name: "Zoho", src: "/logos/zoho.svg", h: 22 },
+  { name: "SAP", src: "/logos/sap.svg", h: 60 },
+  { name: "Oracle", src: "/logos/oracle.svg", h: 60 },
+  { name: "Tally", src: "/logos/tally.svg", h: 60 },
+  { name: "Odoo", src: "/logos/odoo.svg", h: 60 },
+  { name: "Zoho", src: "/logos/zoho.svg", h: 60 },
 ];
 
 export default function IntegrationLogos({ className = "" }) {
