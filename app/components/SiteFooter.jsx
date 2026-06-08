@@ -33,7 +33,7 @@ const COLS = [
     links: [
       ["X / Twitter", "https://x.com/primemeridian"],
       ["LinkedIn", "https://www.linkedin.com/company/prime-meridian-systems"],
-      ["Email", "mailto:hello@primemeridian.in"],
+      ["Email", "mailto:contact@primemeridiansystems.in"],
     ],
   },
 ];

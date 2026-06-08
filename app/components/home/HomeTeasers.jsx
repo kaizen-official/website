@@ -3,6 +3,7 @@ import ApproachFlow from "../ApproachFlow";
 import SectionTeaser from "../SectionTeaser";
 import Reveal from "../Reveal";
 import { INTEGRATIONS, PRODUCTS, TEAM } from "@/lib/content";
+import ClosingCTA from "../ClosingCTA";
 
 export default function HomeTeasers() {
   return (
@@ -11,7 +12,7 @@ export default function HomeTeasers() {
         id="about-preview"
         label="About us"
         title="AI-native engineers on the ground"
-        description="A team of product engineers focused on solving real operational problems for Bharat's businesses — embedded where the work happens."
+        description="A team of product engineers focused on solving real operational problems for Bharat's businesses - embedded where the work happens."
         href="/about"
         linkText="Meet the team"
       >
@@ -21,7 +22,7 @@ export default function HomeTeasers() {
             We don&apos;t build from a distance.
           </p>
           <p className="mt-4 text-[0.95rem] leading-relaxed text-muted">
-            Factories, offices, and operational sites — we learn your workflows
+            Factories, offices, and operational sites - we learn your workflows
             firsthand before writing a line of code.
           </p>
           <div className="mt-6 flex gap-3">
@@ -42,7 +43,7 @@ export default function HomeTeasers() {
         id="offerings-preview"
         label="Our offerings"
         title="Two paths to intelligent operations"
-        description="Full AI-native operating systems for businesses without mature software — or an intelligence layer that makes your existing ERP significantly smarter."
+        description="Full AI-native operating systems for businesses without mature software - or an intelligence layer that makes your existing ERP significantly smarter."
         href="/offerings"
         linkText="Explore offerings"
         dark
@@ -74,7 +75,7 @@ export default function HomeTeasers() {
         id="why-we-win-preview"
         label="Why we win"
         title="Every software generates data. Very few generate intelligence."
-        description="We bridge the gap — turning operational data into actionable intelligence that drives efficiency, performance, and growth."
+        description="We bridge the gap - turning operational data into actionable intelligence that drives efficiency, performance, and growth."
         href="/why-we-win"
         linkText="See our approach"
       >
@@ -83,7 +84,7 @@ export default function HomeTeasers() {
         </div>
       </SectionTeaser>
 
-      <section
+      {/* <section
         id="contact-preview"
         className="scroll-mt-28 border-t border-line px-5 py-20 md:py-28"
       >
@@ -97,7 +98,7 @@ export default function HomeTeasers() {
                 </h2>
                 <p className="mt-4 text-muted">
                   Tell us about your business, your stack, and where you want to
-                  grow. We&apos;ll take it from there — on the ground, with your
+                  grow. We&apos;ll take it from there - on the ground, with your
                   team.
                 </p>
                 <Link href="/contact" className="link-arrow mt-8 inline-flex">
@@ -122,7 +123,9 @@ export default function HomeTeasers() {
             </div>
           </Reveal>
         </div>
-      </section>
+      </section> */}
+
+      <ClosingCTA/>
     </>
   );
 }

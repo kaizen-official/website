@@ -1,4 +1,4 @@
-import PageHero from "../../components/PageHero";
+import AboutHero from "../../components/heroes/AboutHero";
 import AboutPageContent from "../../components/about/AboutPageContent";
 
 export const metadata = {
@@ -11,11 +11,7 @@ export const metadata = {
 export default function AboutPage() {
   return (
     <main>
-      <PageHero
-        label="About us"
-        title="AI-native engineers on the ground"
-        description="We embed with your teams to understand operations firsthand — then build systems that turn data into intelligent growth."
-      />
+      <AboutHero />
       <AboutPageContent />
     </main>
   );

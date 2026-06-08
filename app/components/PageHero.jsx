@@ -1,7 +1,7 @@
 import { AuroraBars } from "@/components/unlumen-ui/aurora-bars";
 import Reveal from "./Reveal";
 
-const LIGHT_AURORA = [
+const HERO_AURORA_COLORS = [
   "#b8e8d4",
   "#ffd9a8",
   "#ffc4df",
@@ -10,90 +10,77 @@ const LIGHT_AURORA = [
   "#f4f4f250",
 ];
 
-const DARK_AURORA = [
-  "#bcd6ff",
-  "#cdc9ff",
-  "#e4ccff",
-  "#ffd0e6",
-  "#ffeacf",
-  "#0a0a0a00",
-];
-
-export default function PageHero({
-  label,
-  title,
-  description,
-  tone = "light",
-  compact = false,
-}) {
-  const dark = tone === "dark";
-  const colors = dark ? DARK_AURORA : LIGHT_AURORA;
-
+export default function PageHero({ eyebrow, title, description, children }) {
   return (
-    <section
-      className={`relative overflow-hidden px-5 text-center ${
-        compact ? "pb-16 pt-32 md:pb-20 md:pt-36" : "pb-24 pt-32 md:pb-32 md:pt-40"
-      } ${dark ? "bg-night text-white" : "bg-bg text-ink"}`}
-    >
-      <div aria-hidden="true" className="pointer-events-none absolute inset-0">
-        <div
-          className={`absolute inset-x-0 bottom-0 ${dark ? "h-full" : "h-[68%]"}`}
-        >
+    <section className="relative flex min-h-[80svh] flex-col items-center justify-center overflow-hidden px-5 pb-20 pt-32 text-center">
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 -z-10 bg-bg"
+      >
+        <div className="absolute inset-x-0 bottom-0 h-[72%]">
           <AuroraBars
-            background={dark ? "#0a0a0a" : "transparent"}
-            barCount={dark ? 32 : 28}
-            barOpacity={dark ? 0.9 : 1}
-            blur={dark ? 8 : 3}
-            colors={colors}
-            gap={dark ? 3 : 2}
-            maxHeightRatio={dark ? 0.88 : 0.92}
-            minHeightRatio={dark ? 0.16 : 0.38}
-            speed={dark ? 0.38 : 0.42}
-            vignette={dark}
+            background="transparent"
+            barCount={30}
+            barOpacity={1}
+            blur={3}
+            colors={HERO_AURORA_COLORS}
+            gap={2}
+            maxHeightRatio={1}
+            minHeightRatio={0.3}
+            speed={5.5}
+            vignette={false}
           />
         </div>
+        <div className="iris-grain absolute inset-0 opacity-40" />
         <div
-          className={`iris-grain absolute inset-0 ${dark ? "opacity-[0.08]" : "opacity-35"}`}
+          className="absolute inset-0"
+          style={{
+            background:
+              "linear-gradient(to bottom, #f4f4f2 0%, #f4f4f2 14%, rgba(244,244,242,0.92) 28%, rgba(244,244,242,0.45) 48%, transparent 68%)",
+          }}
         />
         <div
           className="absolute inset-0"
           style={{
-            background: dark
-              ? "radial-gradient(ellipse 75% 60% at 50% 40%, rgba(10,10,10,0.75) 20%, rgba(10,10,10,0.3) 50%, transparent 74%)"
-              : "linear-gradient(to bottom, #f4f4f2 0%, #f4f4f2 12%, rgba(244,244,242,0.9) 30%, transparent 62%)",
+            background:
+              "radial-gradient(ellipse 72% 58% at 50% 46%, rgba(244,244,242,0.7) 0%, transparent 66%)",
           }}
         />
       </div>
 
-      <div className="relative mx-auto max-w-4xl">
-        {label ? (
-          <Reveal as="p" className={`mono-label mb-5 ${dark ? "text-white/50" : ""}`}>
-            {label}
-          </Reveal>
-        ) : null}
-        <Reveal
-          as="h1"
-          delay={40}
-          className={`display text-balance ${
-            compact
-              ? "text-4xl sm:text-5xl md:text-6xl"
-              : "text-[2.4rem] sm:text-6xl md:text-7xl lg:text-[4.5rem]"
-          }`}
-        >
-          {title}
+      <Reveal as="p" delay={20} className="mono-label mb-5">
+        {eyebrow}
+      </Reveal>
+
+      <Reveal
+        as="h1"
+        delay={60}
+        className="display text-balance text-[2.5rem] leading-none sm:text-6xl md:text-[4.2rem] lg:text-[4.8rem]"
+      >
+        {title}
+      </Reveal>
+
+      <Reveal
+        as="p"
+        delay={140}
+        className="mt-7 max-w-3xl text-balance text-lg leading-relaxed text-muted md:text-xl"
+      >
+        {description}
+      </Reveal>
+
+      {children ? (
+        <Reveal delay={220} className="mt-10 flex flex-wrap items-center justify-center gap-3">
+          {children}
         </Reveal>
-        {description ? (
-          <Reveal
-            as="p"
-            delay={100}
-            className={`mx-auto mt-6 max-w-2xl text-balance text-lg leading-relaxed md:text-xl ${
-              dark ? "text-white/65" : "text-muted"
-            }`}
-          >
-            {description}
-          </Reveal>
-        ) : null}
-      </div>
+      ) : null}
     </section>
+  );
+}
+
+export function HeroChip({ children }) {
+  return (
+    <span className="rounded-full border border-line-strong bg-surface/80 px-4 py-1.5 font-mono text-xs uppercase tracking-[0.04em] text-muted backdrop-blur-sm">
+      {children}
+    </span>
   );
 }

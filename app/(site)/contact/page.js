@@ -1,5 +1,5 @@
 import { CONTACT_FAQ } from "@/lib/content";
-import PageHero from "../../components/PageHero";
+import ContactHero from "../../components/heroes/ContactHero";
 import ContactPageContent from "../../components/contact/ContactPageContent";
 
 const faqJsonLd = {
@@ -26,13 +26,7 @@ export default function ContactPage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
       />
-      <PageHero
-        label="Contact us"
-        title="Let's build intelligence into your operations"
-        description="Tell us about your business, your stack, and where you want to grow. We'll take it from there — on the ground, with your team."
-        tone="dark"
-        compact
-      />
+      <ContactHero />
       <ContactPageContent />
     </main>
   );

@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
-import Pill from "./Pill";
+import BookDemoPill from "./BookDemoPill";
 import Aurora from "./Aurora";
 import Wordmark from "./Wordmark";
 
@@ -151,9 +151,7 @@ export default function SiteNav() {
           </div>
 
           <div className="hidden shrink-0 items-center md:flex">
-            <Pill href="/contact" variant="primary" className="text-[0.88rem]!">
-              Book a demo
-            </Pill>
+            <BookDemoPill variant="primary" className="text-[0.88rem]!" />
           </div>
 
           <button
@@ -230,14 +228,11 @@ export default function SiteNav() {
               transitionDelay: open ? `${120 + LINKS.length * 60}ms` : "0ms",
             }}
           >
-            <Pill
-              href="/contact"
+            <BookDemoPill
               variant="primary"
               className="w-fit"
               onClick={() => setOpen(false)}
-            >
-              Book a demo
-            </Pill>
+            />
           </div>
         </nav>
       </div>

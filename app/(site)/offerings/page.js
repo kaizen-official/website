@@ -1,4 +1,4 @@
-import PageHero from "../../components/PageHero";
+import OfferingsHero from "../../components/heroes/OfferingsHero";
 import OfferingsPageContent from "../../components/offerings/OfferingsPageContent";
 
 export const metadata = {
@@ -11,12 +11,7 @@ export const metadata = {
 export default function OfferingsPage() {
   return (
     <main>
-      <PageHero
-        label="Our offerings"
-        title="Two paths to intelligent operations"
-        description="Full AI-native operating systems — or an intelligence layer that makes your existing software significantly smarter."
-        tone="dark"
-      />
+      <OfferingsHero />
       <OfferingsPageContent />
     </main>
   );

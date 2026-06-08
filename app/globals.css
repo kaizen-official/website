@@ -347,6 +347,200 @@ body {
   }
 }
 
+/* ---------- page heroes ---------- */
+
+.hero-grid {
+  background-image:
+    linear-gradient(var(--line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--line) 1px, transparent 1px);
+  background-size: 3.25rem 3.25rem;
+  mask-image: radial-gradient(ellipse 78% 72% at 50% 28%, #000, transparent 76%);
+}
+
+.hero-grid-dark {
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+  background-size: 3.25rem 3.25rem;
+  mask-image: radial-gradient(ellipse 78% 72% at 50% 32%, #000, transparent 74%);
+}
+
+.hero-glow-iris {
+  background: radial-gradient(
+    circle,
+    var(--iris-lav) 0%,
+    var(--iris-sky) 42%,
+    transparent 70%
+  );
+  filter: blur(64px);
+  opacity: 0.55;
+}
+
+.hero-glow-warm {
+  background: radial-gradient(
+    circle,
+    var(--iris-mint) 0%,
+    var(--iris-lime) 46%,
+    transparent 72%
+  );
+  filter: blur(72px);
+  opacity: 0.5;
+}
+
+.hero-glow-cool-dark {
+  background: radial-gradient(
+    circle,
+    rgba(140, 165, 255, 0.5) 0%,
+    rgba(190, 150, 255, 0.28) 46%,
+    transparent 72%
+  );
+  filter: blur(72px);
+  opacity: 0.6;
+}
+
+.hero-beam {
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    rgba(255, 255, 255, 0.16),
+    transparent
+  );
+}
+
+/* hero badge */
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  border-radius: 999px;
+  border: 1px solid var(--line-strong);
+  background: color-mix(in srgb, var(--surface) 78%, transparent);
+  padding: 0.4rem 0.9rem 0.4rem 0.75rem;
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--muted);
+  backdrop-filter: blur(8px);
+}
+
+.hero-badge-dark {
+  border-color: rgba(255, 255, 255, 0.14);
+  background: rgba(255, 255, 255, 0.06);
+  color: rgba(255, 255, 255, 0.62);
+}
+
+.hero-badge-dot {
+  position: relative;
+  height: 0.5rem;
+  width: 0.5rem;
+  border-radius: 50%;
+  background: #19c37d;
+}
+
+.hero-badge-dot::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: #19c37d;
+  animation: hero-badge-ping 2.4s var(--ease-out) infinite;
+}
+
+@keyframes hero-badge-ping {
+  0% {
+    transform: scale(1);
+    opacity: 0.6;
+  }
+  100% {
+    transform: scale(3);
+    opacity: 0;
+  }
+}
+
+/* integration logo strip */
+.logo-cell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem 0.5rem;
+  transition: transform 300ms var(--ease-out);
+}
+
+.logo-cell img {
+  width: auto;
+  max-width: 100%;
+  object-fit: contain;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .logo-cell:hover {
+    transform: translateY(-2px);
+  }
+}
+
+/* why-we-win pipeline */
+.pipeline-track {
+  position: absolute;
+  top: 0.5rem;
+  left: 16.66%;
+  right: 16.66%;
+  height: 1px;
+  background: var(--line);
+  overflow: hidden;
+}
+
+.pipeline-fill {
+  height: 100%;
+  width: 100%;
+  background: linear-gradient(
+    to right,
+    var(--iris-sky),
+    var(--iris-lav),
+    var(--iris-mint)
+  );
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 1.8s var(--ease-out);
+}
+
+.pipeline-active .pipeline-fill {
+  transform: scaleX(1);
+}
+
+.pipeline-dot {
+  height: 1.1rem;
+  width: 1.1rem;
+  border-radius: 50%;
+  border: 1px solid var(--line-strong);
+  background: var(--surface);
+  box-shadow: 0 0 0 5px var(--bg);
+}
+
+.pipeline-node {
+  opacity: 0;
+  transform: translateY(10px) scale(0.97);
+  transition:
+    opacity 600ms var(--ease-out),
+    transform 600ms var(--ease-out);
+}
+
+.pipeline-active .pipeline-node {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.pipeline-active .pipeline-dot {
+  border-color: var(--ink);
+  background: var(--ink);
+}
+
+@media (max-width: 639px) {
+  .pipeline-track {
+    display: none;
+  }
+}
+
 /* ---------- approach flow (why we win) ---------- */
 
 .approach-flow {
@@ -496,6 +690,15 @@ body {
   }
   .approach-arrow-path {
     stroke-dashoffset: 0 !important;
+    transition: none !important;
+  }
+  .hero-badge-dot::after {
+    animation: none !important;
+  }
+  .pipeline-fill,
+  .pipeline-node {
+    transform: none !important;
+    opacity: 1 !important;
     transition: none !important;
   }
 }

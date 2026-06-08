@@ -1,12 +1,13 @@
 import Reveal from "../Reveal";
 import SectionIntro from "../SectionIntro";
 import Pill from "../Pill";
+import TeamMemberCard from "./TeamMemberCard";
 import { FDE_POINTS, TEAM } from "@/lib/content";
 
 const PRINCIPLES = [
   {
     title: "Proximity over assumptions",
-    body: "The best systems are built where the work happens — not from a conference room.",
+    body: "The best systems are built where the work happens - not from a conference room.",
   },
   {
     title: "Intelligence over digitization",
@@ -25,7 +26,7 @@ export default function AboutPageContent() {
         <SectionIntro
           label="Who we are"
           title="A team of AI-native product engineers"
-          description="Prime Meridian Systems is focused on solving real operational problems for Bharat's businesses — from factories and construction sites to enterprises running mature software stacks."
+          description="Prime Meridian Systems is focused on solving real operational problems for Bharat's businesses - from factories and construction sites to enterprises running mature software stacks."
         />
 
         <div className="grid grid-cols-1 gap-5 lg:grid-cols-5">
@@ -76,7 +77,7 @@ export default function AboutPageContent() {
             <p className="mt-5 text-[1.05rem] leading-relaxed">
               Whether you need a full AI-native operating system or an
               intelligence layer on top of SAP, Tally, or custom software, our
-              approach begins on your floor — with your data and your
+              approach begins on your floor - with your data and your
               constraints.
             </p>
           </Reveal>
@@ -91,27 +92,7 @@ export default function AboutPageContent() {
           <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
             {TEAM.map((member, i) => (
               <Reveal key={member.name} delay={i * 60}>
-                <article className="card card-hover p-8 md:p-10">
-                  <div className="mb-6 flex items-center gap-4">
-                    <div
-                      aria-hidden="true"
-                      className="flex h-14 w-14 items-center justify-center rounded-full bg-surface-2 font-mono text-base font-medium text-ink"
-                    >
-                      {member.name.charAt(0)}
-                    </div>
-                    <div>
-                      <h3 className="text-2xl font-semibold tracking-tight">
-                        {member.name}
-                      </h3>
-                      <p className="font-mono text-xs uppercase tracking-wide text-muted">
-                        {member.role}
-                      </p>
-                    </div>
-                  </div>
-                  <p className="text-[0.98rem] leading-relaxed text-muted">
-                    {member.focus}
-                  </p>
-                </article>
+                <TeamMemberCard member={member} />
               </Reveal>
             ))}
           </div>

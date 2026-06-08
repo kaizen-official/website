@@ -1,12 +1,8 @@
 import Reveal from "../Reveal";
 import SectionIntro from "../SectionIntro";
 import Pill from "../Pill";
-import {
-  INTELLIGENCE_CAPABILITIES,
-  INTEGRATIONS,
-  IOT,
-  PRODUCTS,
-} from "@/lib/content";
+import IntegrationLogos from "../IntegrationLogos";
+import { INTELLIGENCE_CAPABILITIES, IOT, PRODUCTS } from "@/lib/content";
 
 export default function OfferingsPageContent() {
   return (
@@ -93,24 +89,15 @@ export default function OfferingsPageContent() {
               <p className="mono-label mb-5 text-white/45">
                 Works with your existing systems
               </p>
-              <div className="marquee-mask overflow-hidden">
-                <div className="marquee-track flex w-max items-center gap-3">
-                  {[...INTEGRATIONS, ...INTEGRATIONS].map((name, i) => (
-                    <span
-                      key={`${name}-${i}`}
-                      className="rounded-full border border-night-line px-5 py-2 font-mono text-sm text-white/70"
-                    >
-                      {name}
-                    </span>
-                  ))}
-                </div>
+              <div className="rounded-2xl bg-surface p-6 md:p-7">
+                <IntegrationLogos />
               </div>
               <h3 className="display mt-10 text-balance text-3xl md:text-4xl">
                 No replacement. Only intelligence.
               </h3>
               <p className="mt-4 max-w-2xl text-[0.98rem] leading-relaxed text-white/60">
                 We connect, analyze, and enhance your existing software to drive
-                better decisions and performance — without ripping out systems
+                better decisions and performance - without ripping out systems
                 your teams already depend on.
               </p>
             </div>
